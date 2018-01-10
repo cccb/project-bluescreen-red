@@ -1,0 +1,11 @@
+{
+  "name": "project-bluescreen-red",
+  "version": "1.0.0",
+  "description": "A MQTT control panel",
+  "main": "static/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
