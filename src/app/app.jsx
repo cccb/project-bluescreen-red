@@ -32,11 +32,15 @@ import { createLogger} from 'redux-logger'
 import appReducer
   from './reducers/app-reducer'
 
+// Components
+import MainLayout from 'components/layout/main'
+
 
 // Application Setup
 const history = createHistory({
-  basename: '/app'  
+  basename: '/app'
 });
+
 const historyRouterMiddleware = routerMiddleware(history);
 
 const loggerMiddleware = createLogger();
@@ -52,18 +56,6 @@ const store = createStore(
 
 
 // Initial stubs
-class LayoutMain extends Component {
-  render() {
-    return (
-      <div className="app">
-        <h1>Layout</h1>
-        <div>
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
-}
 
 class WelcomePage extends Component {
   render() {
@@ -92,10 +84,10 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <LayoutMain>
+          <MainLayout>
             <Route exact path="/" component={WelcomePage} />
             <Route path="/about" component={AboutPage} />
-          </LayoutMain>
+          </MainLayout>
         </ConnectedRouter>
       </Provider>
     );

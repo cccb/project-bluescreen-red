@@ -2,5 +2,51 @@
  * main.css
  */
 
+/* -- Layout */
+.app, body, html {
+    background: black;
+}
 
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-main {
+    flex: 1 1;
+}
+
+/* -- Navigation */
+.nav-titlebar {
+    flex: 0 0;
+
+    background: #00AAAA;
+    color: white;
+
+    padding: 1px 10px;
+}
+
+.nav-title {
+    float: left;
+}
+
+.nav-version {
+    float: right;
+}
+
+.nav-footer {
+    flex: 0 0;
+    background: #555555;
+    color: white;
+    padding: 1px 10px;
+}
+
+.nav-copyright {
+    float: left;
+}
+
+.nav-license {
+    float: right;
+}
 
