@@ -11,3 +11,5 @@ yarn.lock
 
 static/
 
+
+npm-debug.log
