@@ -18,35 +18,38 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 
 // Router
-import { createHistory } from 'history'
-import { Router,
-         Route,
-         IndexRoute,
-         IndexRedirect,
-         useRouterHistory } from 'react-router'
-
-import { syncHistoryWithStore } from 'react-router-redux'
+import { Route, IndexRoute } from 'react-router'
+import createHistory from 'history/createBrowserHistory'
+import { ConnectedRouter,
+         routerReducer,
+         routerMiddleware } from 'react-router-redux'
 
 // Middlewares
 import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import { routerMiddleware as createRouterMiddleware }
-  from 'react-router-redux'
+import { createLogger} from 'redux-logger'
+
+// Application Reducer
+import appReducer
+  from './reducers/app-reducer'
 
 
 // Application Setup
-const browserHistory = useRouterHistory(createHistory)({
-  basename: '/app'
+const history = createHistory({
+  basename: '/app'  
 });
+const historyRouterMiddleware = routerMiddleware(history);
 
 const loggerMiddleware = createLogger();
-const store = createStore(combinedReducer, applyMiddleware(
-  routerMiddleware,
-  thunkMiddleware,
-  loggerMiddleware
-));
+const store = createStore(
+  appReducer,
+  applyMiddleware(
+    historyRouterMiddleware,
+    thunkMiddleware,
+    loggerMiddleware
+  )
+);
 
-const history = syncHistoryWithStore(browserHistory, store);
+
 
 // Initial stubs
 class LayoutMain extends Component {
@@ -72,17 +75,28 @@ class WelcomePage extends Component {
   }
 }
 
+class AboutPage extends Component {
+  render() {
+    return (
+      <div className="page page-about">
+        About.
+      </div>
+    );
+  }
+}
+
 
 // Main Application
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router history={history}>
-          <Route path="/" component={LayoutMain}>
-            <IndexRoute component={WelcomePage}/>
-          </Route>
-        </Router>
+        <ConnectedRouter history={history}>
+          <LayoutMain>
+            <Route exact path="/" component={WelcomePage} />
+            <Route path="/about" component={AboutPage} />
+          </LayoutMain>
+        </ConnectedRouter>
       </Provider>
     );
   }
