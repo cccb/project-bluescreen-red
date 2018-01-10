@@ -7,6 +7,7 @@ config.devServer = {
     inline: true,
     port: 3333,
     host: 'localhost',
+    historyApiFallback: true
 }
 
 module.exports = config;
