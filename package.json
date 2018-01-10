@@ -4,7 +4,8 @@
   "description": "A MQTT control panel",
   "main": "static/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server --config webpack-dev-server.config.js --progress --inline --colors",
+    "build": "webpack --config webpack-production.config.js --progress --colors"
   },
   "author": "",
   "license": "MIT",

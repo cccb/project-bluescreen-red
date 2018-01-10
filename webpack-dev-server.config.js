@@ -3,7 +3,7 @@ let config = require('./webpack.config');
 
 config.devServer = {
     contentBase: 'src/public',
-    hot: true,
+    hot: false,
     inline: true,
     port: 3333,
     host: 'localhost',
