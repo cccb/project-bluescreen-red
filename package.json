@@ -9,18 +9,25 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "font-awesome": "^4.7.0",
+    "history": "^4.7.2",
+    "moment": "^2.20.1",
     "mqtt": "^2.15.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-redux": "^5.0.6"
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-react": "^6.24.1",
+    "transfer-webpack-plugin": "^0.1.4",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.10.1",
-    "transfer-webpack-plugin": "^0.1.4"
+    "webpack-dev-server": "^2.10.1"
   }
 }
