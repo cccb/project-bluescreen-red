@@ -26,7 +26,6 @@ const config = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new TransferWebpackPlugin([
       {from: 'public'},
@@ -45,7 +44,7 @@ const config = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot-loader', 'babel-loader'],
+        loaders: ['babel-loader'],
         exclude: [nodeModulesPath],
       },
     ],

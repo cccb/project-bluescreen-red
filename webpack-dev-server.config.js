@@ -9,3 +9,5 @@ config.devServer = {
     host: 'localhost',
 }
 
+module.exports = config;
+
