@@ -31,6 +31,10 @@ class Sidebar extends Component {
           <Link to="/audio" className="btn btn-lg btn-info">
             <div className="btn-inner">Audio</div>
           </Link>
+
+          <Link to="/treppe" className="btn btn-lg btn-info">
+            <div className="btn-inner">Treppe</div>
+          </Link>
         </div>
 
       </div>
