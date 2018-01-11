@@ -35,6 +35,8 @@ import appReducer
 // Components
 import MainLayout from 'components/layout/main'
 
+// Pages
+import MainHallPage from 'pages/main-hall'
 
 // Application Setup
 const history = createHistory({
@@ -85,7 +87,8 @@ class App extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <MainLayout>
-            <Route exact path="/" component={WelcomePage} />
+            <Route exact path="/" component={MainHallPage} />
+            <Route exact path="/main" component={MainHallPage} />
             <Route path="/about" component={AboutPage} />
           </MainLayout>
         </ConnectedRouter>

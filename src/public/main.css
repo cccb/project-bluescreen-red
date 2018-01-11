@@ -24,7 +24,7 @@
     background: #00AAAA;
     color: white;
 
-    padding: 1px 10px;
+    padding: 1px 15px;
 }
 
 .nav-title {
@@ -39,7 +39,7 @@
     flex: 0 0;
     background: #555555;
     color: white;
-    padding: 1px 10px;
+    padding: 1px 15px;
 }
 
 .nav-copyright {
@@ -49,4 +49,51 @@
 .nav-license {
     float: right;
 }
+
+/* Sidebar navigation */
+.app-main {
+  display: flex;
+  flex-direction: row;
+}
+
+.app-left {
+  flex: 0;
+  flex-basis: 250px;
+  
+  display: flex;
+}
+
+.app-content {
+  flex: 1 1;
+}
+
+
+.nav-sidebar {
+  background: #0000aa;
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-tabs {
+  border: 1px solid white; 
+  flex: 1;
+
+  padding: 10px;
+}
+
+.sidebar-tabs .btn {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* -- Main // Pages */
+.page {
+  margin: 7px;
+}
+
+
 
