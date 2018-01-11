@@ -37,6 +37,7 @@ import MainLayout from 'components/layout/main'
 
 // Pages
 import MainHallPage from 'pages/main-hall'
+import LightsPage   from 'pages/lights'
 
 // Application Setup
 const history = createHistory({
@@ -88,7 +89,8 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <MainLayout>
             <Route exact path="/" component={MainHallPage} />
-            <Route exact path="/main" component={MainHallPage} />
+            <Route path="/main" component={MainHallPage} />
+            <Route path="/lights" component={LightsPage} />
             <Route path="/about" component={AboutPage} />
           </MainLayout>
         </ConnectedRouter>

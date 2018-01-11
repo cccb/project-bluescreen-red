@@ -96,5 +96,37 @@
   margin: 7px;
 }
 
+.grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.grid .panel {
+  flex: 1;
+  background: #0000aa;
+  color: #aaaaaa;
+  position: relative;
+  padding: 10px;
+  margin: 10px;
+  flex-basis: calc(100% * 0.5 - 20px - 1px);
+}
+
+.panel .panel-content {
+  border: 1px solid white; 
+  padding: 10px;
+}
+
+.panel .panel-title-container {
+  color: white;
+  position: absolute;
+  top: 2px;
+  width: 100%;
+  text-align: center;
+}
+
+.panel .panel-title {
+  background: #0000aa;
+}
 
 
