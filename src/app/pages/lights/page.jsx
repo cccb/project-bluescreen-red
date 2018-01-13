@@ -29,13 +29,16 @@ class LightsPage extends Component {
                      onchange={(v) => this.onSliderChange("entry", v)}/>
           </Panel>
           <Panel title="FOH">
-            Panel 2
+            <VSlider value={this.props.fohLevel} max={100} min={0}
+                     onchange={(v) => this.onSliderChange("foh", v)}/>
           </Panel>
           <Panel title="Tisch / Wand">
-            Panel 3
+            <VSlider value={this.props.deskWallLevel} max={100} min={0}
+                     onchange={(v) => this.onSliderChange("deskWall", v)}/>
           </Panel>
           <Panel title="Tisch / Bar">
-            Panel 4
+            <VSlider value={this.props.deskBarLevel} max={100} min={0}
+                     onchange={(v) => this.onSliderChange("deskBar", v)}/>
           </Panel>
         </div>
 
