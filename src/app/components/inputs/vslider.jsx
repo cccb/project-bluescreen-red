@@ -29,14 +29,36 @@ export default class VSlider extends Component {
   }
 
   // Position calculation
-  valueToOffset(v, min, max, yMax) {
-    let v0 = Math.min(max, Math.max(min, v));
-    let offset = yMax * (1.0 - (v0 / max));
+  valueToOffset(v, yMax) {
+    const min = this.props.min;
+    const max = this.props.max;
+    const v0 = Math.min(max, Math.max(min, v));
+    const offset = yMax * (1.0 - (v0 / max));
+
     return offset;
   }
 
+  offsetToValue(y, yMax) {
+    const min = this.props.min;
+    const max = this.props.max;
+
+    const value = Math.min(max,
+                           min + Math.max(0,
+                                          max * (1.0 - ((y) / yMax))));
+    return value;
+  }
+
+
   // Event handling
   onMouseDown(canvas, e) {
+    // Calculate next value
+    const y = e.offsetY;
+    const value = this.offsetToValue(y, canvas.height);
+
+    // Inform the outside
+    if(this.props.onchange) {
+      this.props.onchange(value);
+    }
   }
 
   onMouseUp(canvas, e) {
@@ -49,15 +71,10 @@ export default class VSlider extends Component {
     }
 
     // Calculate next value
-    const min = this.props.min;
-    const max = this.props.max;
-    const yMax = canvas.height - 20;
-    const value = Math.min(max,
-                           min + Math.max(0,
-                                          max * (1.0 - ((y - 10) / yMax))));
+    const value = this.offsetToValue(y, canvas.height);
 
     // Inform the outside
-    if(this.props.onchange) {
+    if(this.props.onchange && Math.abs(value - this.props.value) > 1.0) {
       this.props.onchange(value);
     }
   }
@@ -96,8 +113,6 @@ export default class VSlider extends Component {
 
     // Calculate handle position
     const handleY = this.valueToOffset(this.props.value,
-                                       this.props.min,
-                                       this.props.max,
                                        canvas.height);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
