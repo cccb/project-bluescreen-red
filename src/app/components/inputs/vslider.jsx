@@ -21,6 +21,45 @@ export default class VSlider extends Component {
     // Resize canvas to parent size
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
+
+    // Bind events
+    canvas.addEventListener("mousedown", (e) => this.onMouseDown(canvas, e));
+    canvas.addEventListener("mouseup",   (e) => this.onMouseUp(canvas, e));
+    canvas.addEventListener("mousemove", (e) => this.onMouseMove(canvas, e));
+  }
+
+  // Position calculation
+  valueToOffset(v, min, max, yMax) {
+    let v0 = Math.min(max, Math.max(min, v));
+    let offset = yMax * (1.0 - (v0 / max));
+    return offset;
+  }
+
+  // Event handling
+  onMouseDown(canvas, e) {
+  }
+
+  onMouseUp(canvas, e) {
+  }
+
+  onMouseMove(canvas, e) {
+    const y = e.offsetY;
+    if (!e.buttons) {
+      return;
+    }
+
+    // Calculate next value
+    const min = this.props.min;
+    const max = this.props.max;
+    const yMax = canvas.height - 20;
+    const value = Math.min(max,
+                           min + Math.max(0,
+                                          max * (1.0 - ((y - 10) / yMax))));
+
+    // Inform the outside
+    if(this.props.onchange) {
+      this.props.onchange(value);
+    }
   }
 
   // Drawing routines
@@ -55,6 +94,12 @@ export default class VSlider extends Component {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
 
+    // Calculate handle position
+    const handleY = this.valueToOffset(this.props.value,
+                                       this.props.min,
+                                       this.props.max,
+                                       canvas.height);
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.drawBase(ctx, canvas.width / 2, 4, canvas.height);
     this.drawScale(ctx,
@@ -69,7 +114,7 @@ export default class VSlider extends Component {
                    20);
     this.drawHandle(ctx,
                     0,
-                    59, // calculate from value
+                    handleY,
                     canvas.width,
                     15);
 
