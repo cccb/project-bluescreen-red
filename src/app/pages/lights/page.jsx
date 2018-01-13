@@ -17,14 +17,12 @@ import {setValue} from './actions'
 class LightsPage extends Component {
 
   onSliderChange(handle, value) {
-    console.log("Slider:", handle,
-                "Value:", value);
     this.props.dispatch(setValue(handle, value));
   }
 
   render() {
     return (
-      <div className="page page-lights">
+      <div className="page page-lights noselect">
         <div className="grid">
           <Panel title="Eingang">
             <VSlider value={this.props.entryLevel} max={100} min={0}
