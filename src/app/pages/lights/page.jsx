@@ -9,10 +9,32 @@ import VSlider from 'components/inputs/vslider'
 
 import {setValue} from './actions'
 
+import {fmtPercent} from 'utils/fmt'
 
 /*
  * Fine granular lights controll page
  */
+
+class LightControl extends Component {
+  render() {
+    return (
+      <div className="light-ctrl">
+        <div className="light-title">
+          {this.props.title}
+        </div>
+        <div className="light-input">
+          <VSlider value={this.props.level} max={100} min={0}
+                   onchange={this.props.onchange}/>
+        </div>
+        <div className="light-value">
+          {fmtPercent(this.props.level)}
+        </div>
+      </div>
+    );
+  }
+}
+
+
 
 class LightsPage extends Component {
 
@@ -23,25 +45,22 @@ class LightsPage extends Component {
   render() {
     return (
       <div className="page page-lights noselect">
-        <div className="grid">
-          <Panel title="Eingang">
-            <VSlider value={this.props.entryLevel} max={100} min={0}
-                     onchange={(v) => this.onSliderChange("entry", v)}/>
+          <Panel title="Lights Control">
+            <div className="grid">
+              <LightControl title="Entry"
+                            level={this.props.entryLevel}
+                            onchange={(v) => this.onSliderChange("entry", v)} />
+              <LightControl title="FOH"
+                            level={this.props.fohLevel}
+                            onchange={(v) => this.onSliderChange("foh", v)} />
+              <LightControl title="Desk / Wall" 
+                            level={this.props.deskWallLevel}
+                            onchange={(v) => this.onSliderChange("deskWall", v)} />
+              <LightControl title="Desk / Bar"
+                            level={this.props.deskBarLevel}
+                            onchange={(v) => this.onSliderChange("deskBar", v)} />
+            </div>
           </Panel>
-          <Panel title="FOH">
-            <VSlider value={this.props.fohLevel} max={100} min={0}
-                     onchange={(v) => this.onSliderChange("foh", v)}/>
-          </Panel>
-          <Panel title="Tisch / Wand">
-            <VSlider value={this.props.deskWallLevel} max={100} min={0}
-                     onchange={(v) => this.onSliderChange("deskWall", v)}/>
-          </Panel>
-          <Panel title="Tisch / Bar">
-            <VSlider value={this.props.deskBarLevel} max={100} min={0}
-                     onchange={(v) => this.onSliderChange("deskBar", v)}/>
-          </Panel>
-        </div>
-
       </div>
     );
   }
