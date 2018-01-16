@@ -32,6 +32,11 @@ import { createLogger} from 'redux-logger'
 import appReducer
   from './reducers/app-reducer'
 
+// Configuration
+import loadConfig from 'utils/config/loader'
+import { updateConfig } from 'utils/config/actions'
+
+
 // Components
 import MainLayout from 'components/layout/main'
 
@@ -98,6 +103,14 @@ class App extends Component {
     );
   }
 }
+
+// Load configuration
+loadConfig("/config/config.json").then((config) => {
+  store.dispatch(updateConfig(config));
+})
+.catch((err) => {
+  alert("App unconfigured. Please provide a config/config.json");
+});
 
 // Mount application on DOM
 ReactDOM.render(

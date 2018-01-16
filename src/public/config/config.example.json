@@ -1,0 +1,8 @@
+{
+    "mqtt": {
+        "host": "localhost",
+        "user": null,
+        "password": null
+    }
+}
+
