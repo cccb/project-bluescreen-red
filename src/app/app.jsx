@@ -7,6 +7,8 @@
  *
  */
 
+import mqtt from 'mqtt'
+
 // React
 import React     from 'react'
 import ReactDOM  from 'react-dom'
@@ -107,14 +109,20 @@ class App extends Component {
 // Load configuration
 loadConfig("/config/config.json").then((config) => {
   store.dispatch(updateConfig(config));
+
+  let mqttBroker = "ws://" + config.mqtt.host;
+
+  window.mqttClient = mqtt.connect(mqttBroker);
 })
 .catch((err) => {
   alert("App unconfigured. Please provide a config/config.json");
 });
+
 
 // Mount application on DOM
 ReactDOM.render(
   <App />,
   document.getElementById('app')
 );
+
 
