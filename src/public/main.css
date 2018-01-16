@@ -115,6 +115,11 @@
   margin: 10px;
 }
 
+.panel-grey {
+  background: #555555;
+  color: #aaaaaa;
+}
+
 .panel .panel-content {
   border: 1px solid white; 
   padding: 10px;
@@ -172,3 +177,33 @@
   color: #ffffff;
 }
 
+.panel-input-sources {
+  padding: 20px;
+}
+
+.panel-input-sources button {
+  display: block;
+  width: 100%;
+
+  margin-bottom: 20px;
+}
+
+
+.volume-ctrl {
+    text-align: center;
+}
+
+.volume-input .slider {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box-ctrl button {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: block;
+}
+
+ 

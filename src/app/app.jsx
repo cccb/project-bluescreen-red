@@ -43,7 +43,7 @@ import { updateConfig } from 'utils/config/actions'
 import MainLayout from 'components/layout/main'
 
 // Pages
-import MainHallPage from 'pages/main-hall'
+import MainHallPage from 'pages/main-hall/page'
 import LightsPage   from 'pages/lights/page'
 
 // Application Setup

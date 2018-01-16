@@ -26,6 +26,28 @@ export default class VSlider extends Component {
     canvas.addEventListener("mousedown", (e) => this.onMouseDown(canvas, e));
     canvas.addEventListener("mouseup",   (e) => this.onMouseUp(canvas, e));
     canvas.addEventListener("mousemove", (e) => this.onMouseMove(canvas, e));
+
+
+    // Touch compatibility
+    canvas.addEventListener("touchmove", (e) => {
+      const touch = e.touches[0];
+      const mouseEvent = new MouseEvent("mousemove", {
+        buttons: 1,
+        clientX: touch.clientX,
+        clientY: touch.clientY
+        });
+      canvas.dispatchEvent(mouseEvent);
+     }, false);
+
+    canvas.addEventListener("touchstart", (e) => {
+      const touch = e.touches[0];
+      const mouseEvent = new MouseEvent("mousedown", {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+        });
+      canvas.dispatchEvent(mouseEvent);
+    });
+
   }
 
   // Position calculation
