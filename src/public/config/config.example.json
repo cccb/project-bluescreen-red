@@ -1,6 +1,6 @@
 {
     "mqtt": {
-        "host": "localhost",
+        "host": "localhost:9001",
         "user": null,
         "password": null
     }
