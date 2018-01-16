@@ -26,6 +26,8 @@ export default class VSlider extends Component {
     canvas.addEventListener("mousedown", (e) => this.onMouseDown(canvas, e));
     canvas.addEventListener("mouseup",   (e) => this.onMouseUp(canvas, e));
     canvas.addEventListener("mousemove", (e) => this.onMouseMove(canvas, e));
+    canvas.addEventListener("touchmove", (e) => this.onMouseMove(canvas, e));
+    canvas.addEventListener("touchend",  (e) => this.onMouseUp(canvas, e));
   }
 
   // Position calculation
