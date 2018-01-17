@@ -34,7 +34,7 @@ class MainHallPage extends Component {
     return (
       <div className="page page-mainhall">
 
-        <div className="row">
+        <div className="content">
           <div className="col-md-6">
 
             <Panel title="Audio">
