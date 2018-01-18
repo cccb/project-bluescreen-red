@@ -138,6 +138,10 @@
   padding: 0px 4px;
 }
 
+.panel-grey .panel-title {
+  background: #555555;
+}
+
 
 /* -- Slider */
 .slider.slider-v {
@@ -206,4 +210,22 @@
     display: block;
 }
 
- 
+.controls-row {
+   display: flex;
+   flex-direction: row;
+}
+
+.controls-row .controls-ctrl {
+    display: flex;
+
+    flex: 1;
+    margin: 10px;
+
+    flex-direction: column;
+}
+
+.controls-row .controls-ctrl button {
+    flex: 1;
+}
+
+

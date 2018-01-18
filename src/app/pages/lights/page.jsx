@@ -68,6 +68,23 @@ class LightsPage extends Component {
                             onchange={(v) => this.onSliderChange(ID_DESK_BAR, v)} />
             </div>
           </Panel>
+
+          <Panel title="Presets" className="panel-grey">
+            <div className="controls-row">
+              <div className="controls-ctrl">
+                <button className="btn btn-primary btn-block btn-lg">Das Übliche(TM)</button>
+              </div>
+              <div className="controls-ctrl">
+                <button className="btn btn-info btn-block btn-lg">Dunkel</button>
+              </div>
+              <div className="controls-ctrl">
+                <button className="btn btn-light btn-block btn-lg">Putzlicht</button>
+              </div>
+              <div className="controls-ctrl">
+                <button className="btn btn-danger btn-block btn-lg">Aus</button>
+              </div>
+            </div>
+          </Panel>
       </div>
     );
   }
