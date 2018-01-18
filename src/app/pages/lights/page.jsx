@@ -18,7 +18,7 @@ import {mqttDispatch} from 'utils/mqtt'
 import {debounce} from 'lodash'
 
 // Ratelimit updates
-const debouncedMqttDispatch = debounce(mqttDispatch, 10);
+const debouncedMqttDispatch = debounce(mqttDispatch, 30);
 
 /*
  * Fine granular lights controll page
@@ -70,7 +70,7 @@ class LightsPage extends Component {
               <LightControl title="FOH"
                             level={this.props.fohLevel}
                             onchange={(v) => this.onSliderChange(1, v)} />
-              <LightControl title="Desk / Wall" 
+              <LightControl title="Desk / Wall"
                             level={this.props.deskWallLevel}
                             onchange={(v) => this.onSliderChange(2, v)} />
               <LightControl title="Desk / Bar"
