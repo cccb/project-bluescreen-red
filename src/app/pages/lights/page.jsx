@@ -49,6 +49,34 @@ class LightsPage extends Component {
     debouncedMqttDispatch(mqttSetLightValueRequest(id, value));
   }
 
+  setMasterValue(value) {
+    for (let i = 0; i < this.props.lightLevels.length; i++ ){
+        // Dispatch local update
+        this.props.dispatch(setValue(i, value));
+
+        // Dispatch ratelimited over MQTT
+        mqttDispatch(mqttSetLightValueRequest(i, value));
+    }
+  }
+
+
+  // Light Presets
+  setPresetDefault() {
+    this.setMasterValue(86.2);
+  }
+
+  setPresetDark() {
+    this.setMasterValue(20.0);
+  }
+
+  setPresetBright() {
+    this.setMasterValue(100);
+  }
+
+  setPresetOff() {
+    this.setMasterValue(0);
+  }
+
   render() {
     return (
       <div className="page page-lights noselect">
@@ -72,16 +100,20 @@ class LightsPage extends Component {
           <Panel title="Presets" className="panel-grey">
             <div className="controls-row">
               <div className="controls-ctrl">
-                <button className="btn btn-primary btn-block btn-lg">Das Übliche(TM)</button>
+                <button onClick={(e) => this.setPresetDefault()}
+                        className="btn btn-primary btn-block btn-lg">Das Übliche(TM)</button>
               </div>
               <div className="controls-ctrl">
-                <button className="btn btn-info btn-block btn-lg">Dunkel</button>
+                <button onClick={(e) => this.setPresetDark()}
+                        className="btn btn-info btn-block btn-lg">Dunkel</button>
               </div>
               <div className="controls-ctrl">
-                <button className="btn btn-light btn-block btn-lg">Putzlicht</button>
+                <button onClick={(e) => this.setPresetBright()}
+                        className="btn btn-light btn-block btn-lg">Putzlicht</button>
               </div>
               <div className="controls-ctrl">
-                <button className="btn btn-danger btn-block btn-lg">Aus</button>
+                <button onClick={(e) => this.setPresetOff()}
+                        className="btn btn-danger btn-block btn-lg">Aus</button>
               </div>
             </div>
           </Panel>
@@ -92,6 +124,7 @@ class LightsPage extends Component {
 
 export default connect(
   (state) => ({
+    lightLevels: state.lights.values,
     entryLevel: state.lights.values[ID_ENTRY],
     fohLevel: state.lights.values[ID_FOH],
     deskWallLevel: state.lights.values[ID_DESK_WALL],
