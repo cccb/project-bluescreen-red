@@ -8,16 +8,21 @@ import Panel from 'components/containers/panel'
 import VSlider from 'components/inputs/vslider'
 
 import {setValue,
-        mqttGetLightValuesRequest} from './actions'
+        mqttGetLightValuesRequest,
+        mqttSetLightValueRequest} from './actions'
 
 import {fmtPercent} from 'utils/fmt'
 
 import {mqttDispatch} from 'utils/mqtt'
 
+import {debounce} from 'lodash'
+
+// Ratelimit updates
+const debouncedMqttDispatch = debounce(mqttDispatch, 10);
+
 /*
  * Fine granular lights controll page
  */
-
 class LightControl extends Component {
 
   render() {
@@ -46,8 +51,12 @@ class LightsPage extends Component {
   }
 
 
-  onSliderChange(handle, value) {
-    this.props.dispatch(setValue(handle, value));
+  onSliderChange(id, value) {
+    // Dispatch local update
+    this.props.dispatch(setValue(id, value));
+
+    // Dispatch ratelimited over MQTT
+    debouncedMqttDispatch(mqttSetLightValueRequest(id, value));
   }
 
   render() {
@@ -57,16 +66,16 @@ class LightsPage extends Component {
             <div className="grid">
               <LightControl title="Entry"
                             level={this.props.entryLevel}
-                            onchange={(v) => this.onSliderChange("entry", v)} />
+                            onchange={(v) => this.onSliderChange(0, v)} />
               <LightControl title="FOH"
                             level={this.props.fohLevel}
-                            onchange={(v) => this.onSliderChange("foh", v)} />
+                            onchange={(v) => this.onSliderChange(1, v)} />
               <LightControl title="Desk / Wall" 
                             level={this.props.deskWallLevel}
-                            onchange={(v) => this.onSliderChange("deskWall", v)} />
+                            onchange={(v) => this.onSliderChange(2, v)} />
               <LightControl title="Desk / Bar"
                             level={this.props.deskBarLevel}
-                            onchange={(v) => this.onSliderChange("deskBar", v)} />
+                            onchange={(v) => this.onSliderChange(3, v)} />
             </div>
           </Panel>
       </div>
@@ -76,10 +85,10 @@ class LightsPage extends Component {
 
 export default connect(
   (state) => ({
-    entryLevel: state.lights.values.entry,
-    fohLevel: state.lights.values.foh,
-    deskWallLevel: state.lights.values.deskWall,
-    deskBarLevel: state.lights.values.deskBar
+    entryLevel: state.lights.values[0],
+    fohLevel: state.lights.values[1],
+    deskWallLevel: state.lights.values[2],
+    deskBarLevel: state.lights.values[3]
   }),
 )(LightsPage);
 

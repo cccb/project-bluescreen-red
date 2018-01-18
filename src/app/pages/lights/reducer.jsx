@@ -14,20 +14,15 @@ const lightsMapping = [
 
 // Lights State
 const initialState = {
-  values: {
-    entry: 42,
-    foh: 23,
-    deskWall: 23,
-    deskBar: 0
-  }
+  values: [50, 50, 50, 50]
 };
 
 /*
  * Set a value based on the handle
  */
-function updateValue(state, handle, value) {
+function updateValue(state, light) {
   let next = Object.assign({}, state);
-  next.values[handle] = value;
+  next.values[light.id] = light.value;
 
   return next;
 }
@@ -37,9 +32,8 @@ function updateValue(state, handle, value) {
  */
 function updateMqttLightValue(state, light) {
   let next = Object.assign({}, state);
-  let handle = lightsMapping[light.id];
   let percentage = 100.0 * light.value / 255.0;
-  next.values[handle] = percentage;
+  next.values[light.id] = percentage;
 
   return next;
 }
@@ -51,9 +45,8 @@ function updateMqttLightValue(state, light) {
 function updateMqttLightValues(state, lights) {
   let next = Object.assign({}, state);
   for (let light of lights) {
-    let handle = lightsMapping[light.id];
     let percentage = 100.0 * light.value / 255.0;
-    next.values[handle] = percentage;
+    next.values[light.id] = percentage;
   }
 
   return next;
@@ -63,13 +56,9 @@ function updateMqttLightValues(state, lights) {
 export default function reducer(state=initialState, action) {
   switch(action.type) {
     case SET_VALUE:
-      return updateValue(state,
-                         action.payload.handle,
-                         action.payload.value);
-
+      return updateValue(state, action.payload);
     case MQTT_GET_LIGHT_VALUES_SUCCESS:
       return updateMqttLightValues(state, action.payload);
-
     case MQTT_SET_LIGHT_VALUE_SUCCESS:
       return updateMqttLightValue(state, action.payload);
 

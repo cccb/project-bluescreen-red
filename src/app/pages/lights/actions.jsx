@@ -9,12 +9,12 @@ export const MQTT_SET_LIGHT_VALUE_REQUEST = "@@mqtt/dali/SET_LIGHT_VALUE_REQUEST
 export const MQTT_SET_LIGHT_VALUE_SUCCESS = "@@mqtt/dali/SET_LIGHT_VALUE_SUCCESS";
 
 // Action creators
-export function setValue(handle, value) {
+export function setValue(id, value) {
   return {
     type: SET_VALUE,
     payload: {
-      value: value,
-      handle: handle
+      id: id,
+      value: value
     }
   }
 }
