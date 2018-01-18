@@ -113,7 +113,7 @@ loadConfig("/config/config.json").then((config) => {
   store.dispatch(updateConfig(config));
 
   // Connect mqtt client
-  let client = mqttConnect(config.mqtt.host, store); // Add support for auth
+  let client = mqttConnect(config.mqtt.uri, store); // Add support for auth
   
 })
 .catch((err) => {
