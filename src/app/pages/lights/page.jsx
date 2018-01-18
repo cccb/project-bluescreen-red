@@ -20,6 +20,14 @@ import {debounce} from 'lodash'
 // Ratelimit updates
 const debouncedMqttDispatch = debounce(mqttDispatch, 30);
 
+// Lights mapping:
+const ID_ENTRY = 2;
+const ID_FOH = 3;
+const ID_DESK_WALL = 0;
+const ID_DESK_BAR = 1;
+
+
+
 /*
  * Fine granular lights controll page
  */
@@ -66,16 +74,16 @@ class LightsPage extends Component {
             <div className="grid">
               <LightControl title="Entry"
                             level={this.props.entryLevel}
-                            onchange={(v) => this.onSliderChange(0, v)} />
+                            onchange={(v) => this.onSliderChange(ID_ENTRY, v)} />
               <LightControl title="FOH"
                             level={this.props.fohLevel}
-                            onchange={(v) => this.onSliderChange(1, v)} />
+                            onchange={(v) => this.onSliderChange(ID_FOH, v)} />
               <LightControl title="Desk / Wall"
                             level={this.props.deskWallLevel}
-                            onchange={(v) => this.onSliderChange(2, v)} />
+                            onchange={(v) => this.onSliderChange(ID_DESK_WALL, v)} />
               <LightControl title="Desk / Bar"
                             level={this.props.deskBarLevel}
-                            onchange={(v) => this.onSliderChange(3, v)} />
+                            onchange={(v) => this.onSliderChange(ID_DESK_BAR, v)} />
             </div>
           </Panel>
       </div>
@@ -85,10 +93,10 @@ class LightsPage extends Component {
 
 export default connect(
   (state) => ({
-    entryLevel: state.lights.values[0],
-    fohLevel: state.lights.values[1],
-    deskWallLevel: state.lights.values[2],
-    deskBarLevel: state.lights.values[3]
+    entryLevel: state.lights.values[ID_ENTRY],
+    fohLevel: state.lights.values[ID_FOH],
+    deskWallLevel: state.lights.values[ID_DESK_WALL],
+    deskBarLevel: state.lights.values[ID_DESK_BAR]
   }),
 )(LightsPage);
 
