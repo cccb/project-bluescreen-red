@@ -47,15 +47,10 @@ import LightsPage   from 'pages/lights/page'
 import {mqttConnect} from 'utils/mqtt'
 
 
-
-
 // Application Setup
 const history = createHistory({
   basename: '/app'
 });
-
-
-//
 
 
 const historyRouterMiddleware = routerMiddleware(history);
