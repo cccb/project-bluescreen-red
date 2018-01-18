@@ -7,6 +7,7 @@ import mqtt from 'mqtt'
 
 // Global state because nothing else is sane...
 let _MQTT_CLIENT = null;
+let _MQTT_BUFFER = [];
 
 
 // Wrap an MQTT action into
@@ -20,42 +21,40 @@ function mqttAction(topic, payload) {
 
 
 export function mqttDispatch(action) {
-  if (!_MQTT_CLIENT) {
-    console.error("MQTT client not initilized");
-    return;
-  }
-
-  if (!_MQTT_CLIENT.connected) {
-    console.error("MQTT client not connected");
-    return;
-  }
-
   // Publish message
   let topic = action.type;
-  
-  // Strip mqtt prefix
   if (!topic.startsWith("@@mqtt/")) {
     console.error("MQTT action needs to start with @@mqtt/");
     return;
   }
 
+  // Strip mqtt prefix
   topic = topic.slice(7);
-
   let payload = JSON.stringify(action.payload);
+
+  // Retain until we are connected
+  if (!_MQTT_CLIENT || !_MQTT_CLIENT.connected) {
+    _MQTT_BUFFER.push([topic, payload]);
+    return;
+  }
 
   _MQTT_CLIENT.publish(topic, payload);
 }
 
 
-export function mqttConnect(brokerHost, store) {
+export function mqttConnect(uri, store) {
   // Get MQTT client
-  let uri = "ws://" + brokerHost; 
   let client = mqtt.connect(uri);
 
   // Subscribe to everything since we are
   // a central hub. We need to be informed!
   client.on("connect", function() {
     client.subscribe("#");
+
+    // Publish everything in the buffer
+    for (let update of _MQTT_BUFFER) {
+      client.publish(update[0], update[1]);
+    }
   });
 
   // Create on message handler
