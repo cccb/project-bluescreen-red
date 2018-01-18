@@ -7,15 +7,19 @@ import {connect} from 'react-redux'
 import Panel from 'components/containers/panel'
 import VSlider from 'components/inputs/vslider'
 
-import {setValue} from './actions'
+import {setValue,
+        mqttGetLightValuesRequest} from './actions'
 
 import {fmtPercent} from 'utils/fmt'
+
+import {mqttDispatch} from 'utils/mqtt'
 
 /*
  * Fine granular lights controll page
  */
 
 class LightControl extends Component {
+
   render() {
     return (
       <div className="light-ctrl">
@@ -37,6 +41,10 @@ class LightControl extends Component {
 
 
 class LightsPage extends Component {
+  componentDidMount() {
+    mqttDispatch(mqttGetLightValuesRequest());
+  }
+
 
   onSliderChange(handle, value) {
     this.props.dispatch(setValue(handle, value));
