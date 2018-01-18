@@ -7,8 +7,6 @@
  *
  */
 
-import mqtt from 'mqtt'
-
 // React
 import React     from 'react'
 import ReactDOM  from 'react-dom'
@@ -38,7 +36,6 @@ import appReducer
 import loadConfig from 'utils/config/loader'
 import { updateConfig } from 'utils/config/actions'
 
-
 // Components
 import MainLayout from 'components/layout/main'
 
@@ -46,10 +43,20 @@ import MainLayout from 'components/layout/main'
 import MainHallPage from 'pages/main-hall/page'
 import LightsPage   from 'pages/lights/page'
 
+// MQTT
+import {mqttConnect} from 'utils/mqtt'
+
+
+
+
 // Application Setup
 const history = createHistory({
   basename: '/app'
 });
+
+
+//
+
 
 const historyRouterMiddleware = routerMiddleware(history);
 
@@ -110,14 +117,14 @@ class App extends Component {
 loadConfig("/config/config.json").then((config) => {
   store.dispatch(updateConfig(config));
 
-  let mqttBroker = "ws://" + config.mqtt.host;
-
-  window.mqttClient = mqtt.connect(mqttBroker);
+  // Connect mqtt client
+  let client = mqttConnect(config.mqtt.host, store); // Add support for auth
+  
 })
 .catch((err) => {
   alert("App unconfigured. Please provide a config/config.json");
 });
-
+window.store = store;
 
 // Mount application on DOM
 ReactDOM.render(
