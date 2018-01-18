@@ -55,6 +55,9 @@ export function mqttConnect(uri, store) {
     for (let update of _MQTT_BUFFER) {
       client.publish(update[0], update[1]);
     }
+
+    // Clear buffer
+    _MQTT_BUFFER = [];
   });
 
   // Create on message handler
