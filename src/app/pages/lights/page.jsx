@@ -17,6 +17,10 @@ import {mqttDispatch} from 'utils/mqtt'
 
 import {debounce} from 'lodash'
 
+// Local components
+import LightControl from './widgets/light-control'
+
+
 // Ratelimit updates
 const debouncedMqttDispatch = debounce(mqttDispatch, 30);
 
@@ -31,28 +35,6 @@ const ID_DESK_BAR = 1;
 /*
  * Fine granular lights controll page
  */
-class LightControl extends Component {
-
-  render() {
-    return (
-      <div className="light-ctrl">
-        <div className="light-title">
-          {this.props.title}
-        </div>
-        <div className="light-input">
-          <VSlider value={this.props.level} max={100} min={0}
-                   onchange={this.props.onchange}/>
-        </div>
-        <div className="light-value">
-          {fmtPercent(this.props.level)}
-        </div>
-      </div>
-    );
-  }
-}
-
-
-
 class LightsPage extends Component {
   componentDidMount() {
     mqttDispatch(mqttGetLightValuesRequest());
