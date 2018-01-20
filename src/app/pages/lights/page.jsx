@@ -22,7 +22,7 @@ import LightControl from './widgets/light-control'
 
 
 // Ratelimit updates
-const debouncedMqttDispatch = debounce(mqttDispatch, 30);
+const debouncedMqttDispatch = debounce(mqttDispatch, 10);
 
 // Lights mapping:
 const ID_ENTRY = 2;
@@ -60,13 +60,20 @@ class LightsPage extends Component {
   }
 
 
+
   // Light Presets
   setPresetDefault() {
-    this.setMasterValue(86.2);
+    mqttDispatch(mqttSetLightValueRequest(ID_ENTRY, 75.3));
+    mqttDispatch(mqttSetLightValueRequest(ID_FOH,   94.1));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_WALL, 75.3));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_BAR, 94.1));
   }
 
   setPresetDark() {
-    this.setMasterValue(20.0);
+    mqttDispatch(mqttSetLightValueRequest(ID_ENTRY, 25.0));
+    mqttDispatch(mqttSetLightValueRequest(ID_FOH,   75.0));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_WALL, 25.0));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_BAR, 75.0));
   }
 
   setPresetBright() {
@@ -101,11 +108,11 @@ class LightsPage extends Component {
             <div className="controls-row">
               <div className="controls-ctrl">
                 <button onClick={(e) => this.setPresetDefault()}
-                        className="btn btn-primary btn-block btn-lg">Das Übliche(TM)</button>
+                        className="btn btn-success btn-block btn-lg">Das Übliche(TM)</button>
               </div>
               <div className="controls-ctrl">
                 <button onClick={(e) => this.setPresetDark()}
-                        className="btn btn-info btn-block btn-lg">Dunkel</button>
+                        className="btn btn-primary btn-block btn-lg">Dunkel</button>
               </div>
               <div className="controls-ctrl">
                 <button onClick={(e) => this.setPresetBright()}
