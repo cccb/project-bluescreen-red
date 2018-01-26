@@ -9,6 +9,16 @@ import VSlider from 'components/inputs/vslider'
 
 import {fmtPercent} from 'utils/fmt'
 
+import {mqttDispatch} from 'utils/mqtt'
+
+import {mqttSetLevelRequest,
+        setMasterVolume} from './actions'
+
+import {debounce} from 'lodash'
+
+// Ratelimit updates
+const debouncedMqttDispatch = debounce(mqttDispatch, 5);
+
 class MasterVolumeControl extends Component {
   render() {
     return (
@@ -30,6 +40,12 @@ class MasterVolumeControl extends Component {
 
 
 class MainHallPage extends Component {
+
+  onMasterVolumeChanged(value) {
+    this.props.dispatch(setMasterVolume(value));
+    debouncedMqttDispatch(mqttSetLevelRequest(1, value));
+  }
+
   render() {
     return (
       <div className="page page-mainhall">
@@ -40,7 +56,8 @@ class MainHallPage extends Component {
             <Panel title="Audio">
               <div className="row">
                 <div className="col-md-4 box-centered">
-                  <MasterVolumeControl level={40} />
+                  <MasterVolumeControl level={this.props.masterVolumeLevel}
+                                       onchange={(value) => this.onMasterVolumeChanged(value)} />
 
                   <div className="box-ctrl">
                     <button className="btn btn-lg">Mute</button>
@@ -77,5 +94,9 @@ class MainHallPage extends Component {
 }
 
 
-export default MainHallPage;
+export default connect(
+  (state) => ({
+    masterVolumeLevel: state.mainHall.masterVolumeLevel
+  })
+)(MainHallPage);
 
