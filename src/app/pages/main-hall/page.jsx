@@ -12,7 +12,7 @@ import {fmtPercent} from 'utils/fmt'
 import {mqttDispatch} from 'utils/mqtt'
 
 import {mqttSetLevelRequest,
-        setMasterVolume} from './actions'
+        setMasterVolume} from '../main-audio/actions'
 
 import {debounce} from 'lodash'
 
@@ -96,7 +96,7 @@ class MainHallPage extends Component {
 
 export default connect(
   (state) => ({
-    masterVolumeLevel: state.mainHall.masterVolumeLevel
+    masterVolumeLevel: state.mainAudio.masterVolumeLevel
   })
 )(MainHallPage);
 
