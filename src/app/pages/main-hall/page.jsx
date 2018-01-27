@@ -12,6 +12,9 @@ import {fmtPercent} from 'utils/fmt'
 import {mqttDispatch} from 'utils/mqtt'
 
 import {mqttSetLevelRequest,
+        mqttGetLevelsRequest,
+        mqttGetTogglesRequest,
+        mqttGetSourcesRequest,
         setMasterVolume} from '../main-audio/actions'
 
 import {debounce} from 'lodash'
@@ -40,6 +43,13 @@ class MasterVolumeControl extends Component {
 
 
 class MainHallPage extends Component {
+  
+  componentDidMount() {
+    // Request current state from main soundweb
+    mqttDispatch(mqttGetLevelsRequest());
+    mqttDispatch(mqttGetTogglesRequest());
+    mqttDispatch(mqttGetSourcesRequest());
+  }
 
   onMasterVolumeChanged(value) {
     this.props.dispatch(setMasterVolume(value));

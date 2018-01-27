@@ -5,9 +5,18 @@ export const SET_MASTER_VOLUME =
 
 export const MQTT_GET_LEVELS_REQUEST =
              "@@mqtt/v1/mainhall/soundweb/GET_LEVELS_REQUEST";
-
 export const MQTT_GET_LEVELS_SUCCESS =
-             "@@mqtt/v1/mainhall/soundweb/GET_LEVELS_REQUEST";
+             "@@mqtt/v1/mainhall/soundweb/GET_LEVELS_SUCCESS";
+
+export const MQTT_GET_TOGGLES_REQUEST =
+             "@@mqtt/v1/mainhall/soundweb/GET_TOGGLES_REQUEST";
+export const MQTT_GET_TOGGLES_SUCCESS =
+             "@@mqtt/v1/mainhall/soundweb/GET_TOGGLES_SUCCESS";
+
+export const MQTT_GET_SOURCES_REQUEST =
+             "@@mqtt/v1/mainhall/soundweb/GET_SOURCES_REQUEST";
+export const MQTT_GET_SOURCES_SUCCESS =
+             "@@mqtt/v1/mainhall/soundweb/GET_SOURCES_SUCCESS";
 
 export const MQTT_SET_LEVEL_REQUEST = 
              "@@mqtt/v1/mainhall/soundweb/SET_LEVEL_REQUEST";
@@ -54,9 +63,22 @@ export function mqttSetLevelRequest(levelId, value) {
 export function mqttGetLevelsRequest() {
   return {
     type: MQTT_GET_LEVELS_REQUEST,
-    payload: {}
+    payload: null
   }
 }
 
 
+export function mqttGetTogglesRequest() {
+  return {
+    type: MQTT_GET_TOGGLES_REQUEST,
+    payload: null
+  }
+}
+
+export function mqttGetSourcesRequest() {
+  return {
+    type: MQTT_GET_SOURCES_REQUEST,
+    payload: null
+  }
+}
 
