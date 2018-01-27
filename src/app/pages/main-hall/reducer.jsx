@@ -1,8 +1,4 @@
 
-import {SET_MASTER_VOLUME,
-        MQTT_SET_LEVEL_SUCCESS} from './actions'
-
-
 const initialState = {
 };
 
