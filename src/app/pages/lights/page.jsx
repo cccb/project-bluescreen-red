@@ -18,6 +18,11 @@ import {mqttDispatch} from 'utils/mqtt'
 
 import {debounce} from 'lodash'
 
+import {ID_ENTRY,
+        ID_FOH,
+        ID_DESK_WALL,
+        ID_DESK_BAR} from 'config/mappings/lights'
+
 // Local components
 import LightControl from './widgets/light-control'
 import LightPresets from './widgets/presets'
@@ -25,12 +30,6 @@ import LightPresets from './widgets/presets'
 
 // Ratelimit updates
 const debouncedMqttDispatch = debounce(mqttDispatch, 10);
-
-// Lights mapping:
-const ID_ENTRY = 2;
-const ID_FOH = 3;
-const ID_DESK_WALL = 0;
-const ID_DESK_BAR = 1;
 
 
 

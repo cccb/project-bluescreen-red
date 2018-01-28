@@ -10,21 +10,14 @@ import {setValue,
         mqttGetLightValuesRequest,
         mqttSetLightValueRequest} from 'pages/lights/actions'
 
+import {ID_ENTRY,
+        ID_FOH,
+        ID_DESK_WALL,
+        ID_DESK_BAR} from 'config/mappings/lights'
+
 import Panel from 'components/containers/panel'
 
 class LightPresets extends Component {
-
-  setMasterValue(value) {
-    for (let i = 0; i < this.props.lightLevels.length; i++ ){
-        // Dispatch local update
-        this.props.dispatch(setValue(i, value));
-
-        // Dispatch ratelimited over MQTT
-        mqttDispatch(mqttSetLightValueRequest(i, value));
-    }
-  }
-
-
 
   // Light Presets
   setPresetDefault() {
@@ -42,11 +35,17 @@ class LightPresets extends Component {
   }
 
   setPresetBright() {
-    this.setMasterValue(100);
+    mqttDispatch(mqttSetLightValueRequest(ID_ENTRY, 100.0));
+    mqttDispatch(mqttSetLightValueRequest(ID_FOH,   100.0));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_WALL, 100.0));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_BAR, 100.0));
   }
 
   setPresetOff() {
-    this.setMasterValue(0);
+    mqttDispatch(mqttSetLightValueRequest(ID_ENTRY, 0));
+    mqttDispatch(mqttSetLightValueRequest(ID_FOH,   0));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_WALL, 0));
+    mqttDispatch(mqttSetLightValueRequest(ID_DESK_BAR, 0));
   }
 
   render() {
