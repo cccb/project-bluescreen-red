@@ -17,6 +17,18 @@ import {MAIN_SOURCE,
         MAIN_SOURCE_FOH} from 'config/mappings/audio'
 
 
+class SourceButton extends Component {
+    
+  render() {
+    let btnClass = "btn btn-lg"
+
+    return(
+       <button onClick={() => this.props.onClick(this.props.sourceId)}
+               className={btnClass}>{this.props.children}</button>
+    );
+  }
+
+}
 
 
 class SourceSelect extends Component {
@@ -31,14 +43,17 @@ class SourceSelect extends Component {
   render() {
     return (
       <div className="panel panel-grey panel-input-sources">
-         <button onClick={() => this.onSetSourceClicked(MAIN_SOURCE_DESK)}
-                 className="btn btn-lg">Tisch</button>
-         <button onClick={() => this.onSetSourceClicked(MAIN_SOURCE_HDMI)}
-                 className="btn btn-lg">HDMI / Beamer</button>
-         <button onClick={() => this.onSetSourceClicked(MAIN_SOURCE_SONIC)} 
-                 className="btn btn-lg">Sonic</button>
-         <button onClick={() => this.onSetSourceClicked(MAIN_SOURCE_FOH)}
-                 className="btn btn-lg">Mischpult</button>
+         <SourceButton sourceId={MAIN_SOURCE_DESK}
+                       onClick={this.onSetSourceClicked}>Tisch</SourceButton>
+         <SourceButton sourceId={MAIN_SOURCE_HDMI}
+                       onClick={this.onSetSourceClicked}>HDMI / Beamer
+         </SourceButton>
+         <SourceButton sourceId={MAIN_SOURCE_SONIC}
+                       onClick={this.onSetSourceClicked}>Sonic
+         </SourceButton>
+         <SourceButton sourceId={MAIN_SOURCE_FOH}
+                       onClick={this.onSetSourceClicked}>Mischpult
+         </SourceButton>
       </div>
     );
   }
