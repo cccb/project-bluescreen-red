@@ -55,7 +55,7 @@ class LightPresets extends Component {
     }
 
     return (
-      <Panel title="Presets" className="panel-grey">
+      <Panel title={panelTitle} className="panel-grey">
         <div className="controls-row">
           <div className="controls-ctrl">
             <button onClick={(e) => this.setPresetDefault()}
