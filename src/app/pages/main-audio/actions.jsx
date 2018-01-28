@@ -82,3 +82,13 @@ export function mqttGetSourcesRequest() {
   }
 }
 
+export function mqttSetSourceRequest(sourceId, value) {
+  return {
+    type: MQTT_SET_SOURCE_REQUEST,
+    payload: {
+      id: sourceId,
+      value: value
+    }
+  }
+}
+

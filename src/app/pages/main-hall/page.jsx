@@ -14,12 +14,12 @@ import {mqttDispatch} from 'utils/mqtt'
 import {mqttSetLevelRequest,
         mqttGetLevelsRequest,
         mqttGetTogglesRequest,
-        mqttGetSourcesRequest,
         setMasterVolume} from '../main-audio/actions'
 
 import {debounce} from 'lodash'
 
 import LightPresets from 'pages/lights/widgets/presets'
+import AudioSourceSelect from 'pages/main-audio/widgets/source-select'
 
 
 // Ratelimit updates
@@ -51,7 +51,6 @@ class MainHallPage extends Component {
     // Request current state from main soundweb
     mqttDispatch(mqttGetLevelsRequest());
     mqttDispatch(mqttGetTogglesRequest());
-    mqttDispatch(mqttGetSourcesRequest());
   }
 
   onMasterVolumeChanged(value) {
@@ -78,12 +77,7 @@ class MainHallPage extends Component {
                 </div>
 
                 <div className="col-md-8">
-                  <div className="panel panel-grey panel-input-sources">
-                     <button className="btn btn-lg">Tisch</button>
-                     <button className="btn btn-lg">HDMI / Beamer</button>
-                     <button className="btn btn-lg">Sonic</button>
-                     <button className="btn btn-lg">Mischpult</button>
-                  </div>
+                  <AudioSourceSelect />
                 </div>
 
               </div>
