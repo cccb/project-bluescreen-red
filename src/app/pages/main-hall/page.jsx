@@ -19,6 +19,9 @@ import {mqttSetLevelRequest,
 
 import {debounce} from 'lodash'
 
+import LightPresets from 'pages/lights/widgets/presets'
+
+
 // Ratelimit updates
 const debouncedMqttDispatch = debounce(mqttDispatch, 5);
 
@@ -96,7 +99,12 @@ class MainHallPage extends Component {
             </Panel>
 
           </div>
+
+          <div className="col-md-12">
+            <LightPresets title="Light Presets" />
+          </div>
         </div>
+        
 
       </div>
     );
