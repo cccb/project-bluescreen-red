@@ -71,7 +71,7 @@ function _handleSetLevel(state, levelId, value) {
       next.barLevel = remap100(value); break;
   }
 
-  return state;
+  return next;
 }
 
 /*
