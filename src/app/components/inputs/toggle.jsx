@@ -3,6 +3,17 @@ import React from 'react'
 import {Component} from 'react'
 
 export default class Toggle extends Component {
+
+  onClick() {
+    // Next state
+    if(this.props.active) {
+      this.props.onToggle(false);
+    }
+    else {
+      this.props.onToggle(true);
+    }
+  }
+
   render() {
     let btnClass = "btn btn-lg";
     if (this.props.className) {
@@ -20,7 +31,7 @@ export default class Toggle extends Component {
 
     return (
       <button className={btnClass}
-              onClick={this.props.onClick}>{this.props.children}
+              onClick={() => this.onClick()}>{this.props.children}
       </button>
     );
   }

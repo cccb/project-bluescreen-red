@@ -6,14 +6,18 @@ import {connect} from 'react-redux'
 
 import Panel from 'components/containers/panel'
 import VSlider from 'components/inputs/vslider'
+import Toggle from 'components/inputs/toggle'
 
 import {fmtPercent} from 'utils/fmt'
 
 import {mqttDispatch} from 'utils/mqtt'
 
+import {MAIN_MUTE_MASTER_TOGGLE} from 'config/mappings/audio'
+
 import {mqttSetLevelRequest,
         mqttGetLevelsRequest,
         mqttGetTogglesRequest,
+        mqttSetToggleRequest,
         setMasterVolume} from '../main-audio/actions'
 
 import {debounce} from 'lodash'
@@ -58,6 +62,10 @@ class MainHallPage extends Component {
     debouncedMqttDispatch(mqttSetLevelRequest(1, value));
   }
 
+  onMasterVolumeMuteToggle(nextState) {
+    mqttDispatch(mqttSetToggleRequest(MAIN_MUTE_MASTER_TOGGLE, nextState));
+  }
+
   render() {
     return (
       <div className="page page-mainhall">
@@ -72,7 +80,10 @@ class MainHallPage extends Component {
                                        onchange={(value) => this.onMasterVolumeChanged(value)} />
 
                   <div className="box-ctrl">
-                    <button className="btn btn-lg">Mute</button>
+                    <Toggle onToggle={(s) => this.onMasterVolumeMuteToggle(s)}
+                            active={this.props.masterVolumeMute}>
+                        Mute
+                    </Toggle>
                   </div>
                 </div>
 
@@ -108,7 +119,8 @@ class MainHallPage extends Component {
 
 export default connect(
   (state) => ({
-    masterVolumeLevel: state.mainAudio.masterVolumeLevel
+    masterVolumeLevel: state.mainAudio.masterVolumeLevel,
+    masterVolumeMute:  state.mainAudio.masterVolumeMute
   })
 )(MainHallPage);
 

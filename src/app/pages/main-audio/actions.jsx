@@ -92,3 +92,13 @@ export function mqttSetSourceRequest(sourceId, value) {
   }
 }
 
+export function mqttSetToggleRequest(toggleId, state) {
+  return {
+    type: MQTT_SET_TOGGLE_REQUEST,
+    payload: {
+      id: toggleId,
+      state: state
+    }
+  }
+}
+
