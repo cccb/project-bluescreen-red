@@ -1,4 +1,7 @@
 
+
+import {remap} from 'utils/math'
+
 import {SET_MASTER_VOLUME,
 
         MQTT_SET_LEVEL_SUCCESS,
@@ -12,6 +15,13 @@ import {SET_MASTER_VOLUME,
 import {MAIN_SOURCE,
       
         MAIN_MASTER_LEVEL,
+        MAIN_DELAY_LEVEL,
+        MAIN_BASS_LEVEL,
+        MAIN_BAR_LEVEL,
+
+        MAIN_MUTE_MASTER_TOGGLE,
+        MAIN_MUTE_DELAY_TOGGLE,
+        MAIN_MUTE_BAR_TOGGLE,
 
         MAIN_SOURCE_DESK,
         MAIN_SOURCE_HDMI,
@@ -35,19 +45,71 @@ const initialState = {
 };
 
 
+// Value conversion:
+//  Levels are represented within 0..255
+//  We want somehing like 0..100 for presentation.
+const remap100 = remap.bind(remap, 0, 255, 0, 100);
+const remap8 = remap.bind(remap, 0, 100, 0, 255);
+
+
+/*
+ * Update state after successful set level 
+ */
 function _handleSetLevel(state, levelId, value) {
   if(levelId == MAIN_MASTER_LEVEL) { // MasterVolume
-    // Remap
-    let masterVolumeLevel = (value / 255.0) * 100;
     return Object.assign({}, state, {
-      masterVolumeLevel: masterVolumeLevel
+      masterVolumeLevel: remap100(value) 
     });
   }
 
   return state;
 }
 
+/*
+ * Update state with bulk levels update response
+ */
+function _handleGetLevels(state, levels) {
+  let next = Object.assign({}, state);
+  for (let level of levels) {
+    switch(level.id) {
+      case MAIN_MASTER_LEVEL:
+        next.masterVolumeLevel = remap100(level.value);
+      case MAIN_DELAY_LEVEL:
+        next.delayLevel = remap100(level.value);
+      case MAIN_BASS_LEVEL:
+        next.bassLevel = remap100(level.value);
+      case MAIN_BAR_LEVEL:
+        next.barLevel = remap100(level.value);
+    }
+  }
 
+  return next;
+}
+
+/*
+ * Update state with retrieved bulk toggles response
+ */ 
+function _handleGetToggles(state, toggles) {
+  let next = Object.assign({}, state);
+  for (let toggle of toggles) {
+    console.log("Updating toggle:", toggle);
+    switch(toggle.id) {
+      case MAIN_MUTE_MASTER_TOGGLE:
+        next.masterVolumeMute = toggle.state;
+      case MAIN_MUTE_BAR_TOGGLE:
+        next.barMute = toggle.state;
+      case MAIN_MUTE_DELAY_TOGGLE:
+        next.delayMute = toggle.state;
+    }
+  }
+
+  return next;
+}
+
+
+/*
+ * Handle bulk sources response
+ */
 function _handleGetSources(state, result) {
   let next = Object.assign({}, state);
 
@@ -60,6 +122,9 @@ function _handleGetSources(state, result) {
   return next;
 }
 
+/*
+ * Hanlde successful source update
+ */
 function _handleSetSource(state, source, value) {
   if (source != MAIN_SOURCE) {
     return state;
@@ -70,6 +135,8 @@ function _handleSetSource(state, source, value) {
 
   return next;
 }
+
+
 
 export default function reducer(state=initialState, action) {
   switch(action.type) {
@@ -85,11 +152,15 @@ export default function reducer(state=initialState, action) {
       return _handleSetSource(state,
                               action.payload.id,
                               action.payload.value);
+    case MQTT_GET_LEVELS_SUCCESS:
+      return _handleGetLevels(state, action.payload);
+    case MQTT_GET_TOGGLES_SUCCES:
+      return _handleGetToggles(state, action.payload);
     case MQTT_GET_SOURCES_SUCCESS:
-      return _handleGetSources(state,
-                               action.payload);
+      return _handleGetSources(state, action.payload);
   }
 
   return state;
 }
+
 

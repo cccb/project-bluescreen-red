@@ -7,6 +7,10 @@ export const MAIN_DELAY_LEVEL_RIGHT = 7;
 export const MAIN_BASS_LEVEL = 5;
 export const MAIN_BAR_LEVEL = 2;
 
+export const MAIN_MUTE_MASTER_TOGGLE = 1;
+export const MAIN_MUTE_BAR_TOGGLE = 12;
+export const MAIN_MUTE_DELAY_TOGGLE  = 13;
+
 export const MAIN_SOURCE = 2;
 export const MAIN_SOURCE_LEFT = 2;
 export const MAIN_SOURCE_RIGHT = 7;
