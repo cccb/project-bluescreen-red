@@ -22,6 +22,10 @@ class SourceButton extends Component {
   render() {
     let btnClass = "btn btn-lg"
 
+    if (this.props.active) {
+      btnClass += " btn-success" 
+    }
+
     return(
        <button onClick={() => this.props.onClick(this.props.sourceId)}
                className={btnClass}>{this.props.children}</button>
@@ -43,15 +47,20 @@ class SourceSelect extends Component {
   render() {
     return (
       <div className="panel panel-grey panel-input-sources">
-         <SourceButton sourceId={MAIN_SOURCE_DESK}
-                       onClick={this.onSetSourceClicked}>Tisch</SourceButton>
-         <SourceButton sourceId={MAIN_SOURCE_HDMI}
+         <SourceButton active={this.props.selectedId == MAIN_SOURCE_DESK}
+                       sourceId={MAIN_SOURCE_DESK}
+                       onClick={this.onSetSourceClicked}>Tisch
+         </SourceButton>
+         <SourceButton active={this.props.selectedId == MAIN_SOURCE_HDMI}
+                       sourceId={MAIN_SOURCE_HDMI}
                        onClick={this.onSetSourceClicked}>HDMI / Beamer
          </SourceButton>
-         <SourceButton sourceId={MAIN_SOURCE_SONIC}
+         <SourceButton active={this.props.selectedId == MAIN_SOURCE_SONIC}
+                       sourceId={MAIN_SOURCE_SONIC}
                        onClick={this.onSetSourceClicked}>Sonic
          </SourceButton>
-         <SourceButton sourceId={MAIN_SOURCE_FOH}
+         <SourceButton active={this.props.selectedId == MAIN_SOURCE_FOH}
+                       sourceId={MAIN_SOURCE_FOH}
                        onClick={this.onSetSourceClicked}>Mischpult
          </SourceButton>
       </div>
@@ -61,7 +70,7 @@ class SourceSelect extends Component {
 
 export default connect(
   (state) => ({
-    
+    selectedId: state.mainAudio.sourceId, 
   })
 )(SourceSelect);
 
