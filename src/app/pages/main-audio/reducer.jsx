@@ -165,10 +165,6 @@ function _handleGetSources(state, result) {
 
 export default function reducer(state=initialState, action) {
   switch(action.type) {
-    case SET_MASTER_VOLUME:
-      return Object.assign({}, state, {
-        masterVolumeLevel: action.payload.value
-      });
     case MQTT_SET_LEVEL_SUCCESS:
       return _handleSetLevel(state,
                              action.payload.id,
