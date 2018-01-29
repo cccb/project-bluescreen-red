@@ -20,15 +20,19 @@ import {MAIN_SOURCE,
 class SourceButton extends Component {
     
   render() {
+    let title = this.props.children;
+
     let btnClass = "btn btn-lg"
 
     if (this.props.active) {
       btnClass += " btn-success" 
+      title = ">> " + title + " <<";
     }
 
+
     return(
-       <button onClick={() => this.props.onClick(this.props.sourceId)}
-               className={btnClass}>{this.props.children}</button>
+      <button onClick={() => this.props.onClick(this.props.sourceId)}
+              className={btnClass}>{title}</button>
     );
   }
 
