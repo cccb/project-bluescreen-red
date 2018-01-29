@@ -31,7 +31,8 @@ export default class Toggle extends Component {
 
     return (
       <button className={btnClass}
-              onClick={() => this.onClick()}>{this.props.children}
+              onClick={() => this.onClick()}>
+              {this.props.children}
       </button>
     );
   }
