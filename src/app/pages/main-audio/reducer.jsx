@@ -6,10 +6,12 @@ import {SET_MASTER_VOLUME,
 
         MQTT_SET_LEVEL_SUCCESS,
         MQTT_SET_SOURCE_SUCCESS,
+        MQTT_SET_TOGGLE_SUCCESS,
 
+        // Bulk updates
         MQTT_GET_SOURCES_SUCCESS,
         MQTT_GET_LEVELS_SUCCESS,
-        MQTT_GET_TOGGLES_SUCCES} from './actions'
+        MQTT_GET_TOGGLES_SUCCESS} from './actions'
 
 
 import {MAIN_SOURCE,
@@ -56,13 +58,52 @@ const remap8 = remap.bind(remap, 0, 100, 0, 255);
  * Update state after successful set level 
  */
 function _handleSetLevel(state, levelId, value) {
-  if(levelId == MAIN_MASTER_LEVEL) { // MasterVolume
-    return Object.assign({}, state, {
-      masterVolumeLevel: remap100(value) 
-    });
+  let next = Object.assign({}, state);
+
+  switch(levelId) {
+    case MAIN_MASTER_LEVEL:
+      next.masterVolumeLevel = remap100(value); break;
+    case MAIN_DELAY_LEVEL:
+      next.delayLevel = remap100(value); break;
+    case MAIN_BASS_LEVEL:
+      next.bassLevel = remap100(value); break;
+    case MAIN_BAR_LEVEL:
+      next.barLevel = remap100(value); break;
   }
 
   return state;
+}
+
+/*
+ * Update state after successful set toggle
+ */
+function _handleSetToggle(state, toggleId, toggleState) {
+  let next = Object.assign({}, state);
+
+  switch(toggleId) {
+    case MAIN_MUTE_MASTER_TOGGLE:
+      next.masterVolumeMute = toggleState; break;
+    case MAIN_MUTE_BAR_TOGGLE:
+      next.barMute = toggleState; break;
+    case MAIN_MUTE_DELAY_TOGGLE:
+      next.delayMute = toggleState; break;
+  }
+
+  return next;
+}
+
+/*
+ * Hanlde successful source update
+ */
+function _handleSetSource(state, source, value) {
+  if (source != MAIN_SOURCE) {
+    return state;
+  }
+
+  let next = Object.assign({}, state);
+  next.sourceId = value;
+
+  return next;
 }
 
 /*
@@ -73,13 +114,13 @@ function _handleGetLevels(state, levels) {
   for (let level of levels) {
     switch(level.id) {
       case MAIN_MASTER_LEVEL:
-        next.masterVolumeLevel = remap100(level.value);
+        next.masterVolumeLevel = remap100(level.value); break;
       case MAIN_DELAY_LEVEL:
-        next.delayLevel = remap100(level.value);
+        next.delayLevel = remap100(level.value); break;
       case MAIN_BASS_LEVEL:
-        next.bassLevel = remap100(level.value);
+        next.bassLevel = remap100(level.value); break;
       case MAIN_BAR_LEVEL:
-        next.barLevel = remap100(level.value);
+        next.barLevel = remap100(level.value); break;
     }
   }
 
@@ -92,7 +133,6 @@ function _handleGetLevels(state, levels) {
 function _handleGetToggles(state, toggles) {
   let next = Object.assign({}, state);
   for (let toggle of toggles) {
-    console.log("Updating toggle:", toggle);
     switch(toggle.id) {
       case MAIN_MUTE_MASTER_TOGGLE:
         next.masterVolumeMute = toggle.state;
@@ -122,21 +162,6 @@ function _handleGetSources(state, result) {
   return next;
 }
 
-/*
- * Hanlde successful source update
- */
-function _handleSetSource(state, source, value) {
-  if (source != MAIN_SOURCE) {
-    return state;
-  }
-
-  let next = Object.assign({}, state);
-  next.sourceId = value;
-
-  return next;
-}
-
-
 
 export default function reducer(state=initialState, action) {
   switch(action.type) {
@@ -148,13 +173,17 @@ export default function reducer(state=initialState, action) {
       return _handleSetLevel(state,
                              action.payload.id,
                              action.payload.value);
+    case MQTT_SET_TOGGLE_SUCCESS:
+      return _handleSetToggle(state,
+                              action.payload.id,
+                              action.payload.state);
     case MQTT_SET_SOURCE_SUCCESS:
       return _handleSetSource(state,
                               action.payload.id,
                               action.payload.value);
     case MQTT_GET_LEVELS_SUCCESS:
       return _handleGetLevels(state, action.payload);
-    case MQTT_GET_TOGGLES_SUCCES:
+    case MQTT_GET_TOGGLES_SUCCESS:
       return _handleGetToggles(state, action.payload);
     case MQTT_GET_SOURCES_SUCCESS:
       return _handleGetSources(state, action.payload);
