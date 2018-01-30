@@ -5,7 +5,7 @@ export const MQTT_GET_LIGHT_VALUES_REQUEST =
              "@@mqtt/v1/mainhall/dali/GET_LIGHT_VALUES_REQUEST";
 export const MQTT_GET_LIGHT_VALUES_SUCCESS =
              "@@mqtt/v1/mainhall/dali/GET_LIGHT_VALUES_SUCCESS";
-export const MQTT_GET_LIGHT_VALUES_ERROR = 
+export const MQTT_GET_LIGHT_VALUES_ERROR =
              "@@mqtt/v1/mainhall/dali/GET_LIGHT_VALUES_ERROR";
 
 export const MQTT_SET_LIGHT_VALUE_REQUEST =

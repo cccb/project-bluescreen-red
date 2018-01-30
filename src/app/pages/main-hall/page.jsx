@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import Panel from 'components/containers/panel'
 import VSlider from 'components/inputs/vslider'
 import Toggle from 'components/inputs/toggle'
+import VolumeControl from 'components/inputs/volume-control'
 
 import {fmtPercent} from 'utils/fmt'
 
@@ -29,28 +30,10 @@ import AudioSourceSelect from 'pages/main-audio/widgets/source-select'
 // Ratelimit updates
 const debouncedMqttDispatch = debounce(mqttDispatch, 5);
 
-class MasterVolumeControl extends Component {
-  render() {
-    return (
-      <div className="volume-ctrl box-centered-content">
-        <div className="volume-title">
-          Master Volume
-        </div>
-        <div className="volume-input">
-          <VSlider value={this.props.level} max={100} min={0}
-                   onchange={this.props.onchange} />
-        </div>
-        <div className="volume-value">
-          {fmtPercent(this.props.level)}
-        </div>
-      </div>
-    );
-  }
-}
 
 
 class MainHallPage extends Component {
-  
+
   componentDidMount() {
     // Request current state from main soundweb
     mqttDispatch(mqttGetLevelsRequest());
@@ -76,8 +59,9 @@ class MainHallPage extends Component {
             <Panel title="Audio">
               <div className="row">
                 <div className="col-md-4 box-centered">
-                  <MasterVolumeControl level={this.props.masterVolumeLevel}
-                                       onchange={(value) => this.onMasterVolumeChanged(value)} />
+                  <VolumeControl title="Master Volume"
+                                 level={this.props.masterVolumeLevel}
+                                 onchange={(value) => this.onMasterVolumeChanged(value)} />
 
                   <div className="box-ctrl">
                     <Toggle onToggle={(s) => this.onMasterVolumeMuteToggle(s)}
@@ -109,8 +93,6 @@ class MainHallPage extends Component {
             <LightPresets title="Light Presets" />
           </div>
         </div>
-        
-
       </div>
     );
   }

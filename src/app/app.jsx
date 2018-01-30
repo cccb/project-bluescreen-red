@@ -40,8 +40,9 @@ import { updateConfig } from 'utils/config/actions'
 import MainLayout from 'components/layout/main'
 
 // Pages
-import MainHallPage from 'pages/main-hall/page'
-import LightsPage   from 'pages/lights/page'
+import MainHallPage  from 'pages/main-hall/page'
+import MainAudioPage from 'pages/main-audio/page'
+import LightsPage    from 'pages/lights/page'
 
 // MQTT
 import {mqttConnect} from 'utils/mqtt'
@@ -99,6 +100,7 @@ class App extends Component {
           <MainLayout>
             <Route exact path="/" component={MainHallPage} />
             <Route path="/main" component={MainHallPage} />
+            <Route path="/audio" component={MainAudioPage} />
             <Route path="/lights" component={LightsPage} />
             <Route path="/about" component={AboutPage} />
           </MainLayout>
@@ -114,7 +116,6 @@ loadConfig("/config/config.json").then((config) => {
 
   // Connect mqtt client
   let client = mqttConnect(config.mqtt.uri, store); // Add support for auth
-  
 })
 .catch((err) => {
   alert("App unconfigured. Please provide a config/config.json");
