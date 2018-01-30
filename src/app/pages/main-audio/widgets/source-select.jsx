@@ -18,17 +18,14 @@ import {MAIN_SOURCE,
 
 
 class SourceButton extends Component {
-    
   render() {
     let title = this.props.children;
 
     let btnClass = "btn btn-lg"
 
     if (this.props.active) {
-      btnClass += " btn-success" 
-      title = ">> " + title + " <<";
+      btnClass += " btn-success"
     }
-
 
     return(
       <button onClick={() => this.props.onClick(this.props.sourceId)}
@@ -74,7 +71,7 @@ class SourceSelect extends Component {
 
 export default connect(
   (state) => ({
-    selectedId: state.mainAudio.sourceId, 
+    selectedId: state.mainAudio.sourceId
   })
 )(SourceSelect);
 
