@@ -13,7 +13,8 @@ import {fmtPercent} from 'utils/fmt'
 
 import {mqttDispatch} from 'utils/mqtt'
 
-import {MAIN_MUTE_MASTER_TOGGLE} from 'config/mappings/audio'
+import {MAIN_MASTER_LEVEL,
+        MAIN_MUTE_MASTER_TOGGLE} from 'config/mappings/audio'
 
 import {mqttSetLevelRequest,
         mqttGetLevelsRequest,
@@ -42,7 +43,8 @@ class MainHallPage extends Component {
 
   onMasterVolumeChanged(value) {
     this.props.dispatch(setMasterVolume(value));
-    debouncedMqttDispatch(mqttSetLevelRequest(1, value));
+    debouncedMqttDispatch(mqttSetLevelRequest(MAIN_MASTER_LEVEL,
+                                              value));
   }
 
   onMasterVolumeMuteToggle(nextState) {
