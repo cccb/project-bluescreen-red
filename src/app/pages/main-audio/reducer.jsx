@@ -15,7 +15,7 @@ import {SET_MASTER_VOLUME,
 
 
 import {MAIN_SOURCE,
-      
+
         MAIN_MASTER_LEVEL,
         MAIN_DELAY_LEVEL,
         MAIN_BASS_LEVEL,

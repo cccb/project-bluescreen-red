@@ -192,6 +192,23 @@
   margin-bottom: 20px;
 }
 
+.audio-source-h .panel-input-sources {
+  display: flex;
+  flex-direction: row;
+
+  margin: 0px;
+  padding: 0px;
+
+  background: #0000aa;
+}
+
+.audio-source-h .panel-input-sources button {
+    display: inline;
+
+    flex: 1;
+    margin: 10px;
+}
+
 
 .volume-ctrl {
     text-align: center;
@@ -227,5 +244,6 @@
 .controls-row .controls-ctrl button {
     flex: 1;
 }
+
 
 
