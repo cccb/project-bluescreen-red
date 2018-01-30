@@ -91,6 +91,10 @@
   margin-bottom: 20px;
 }
 
+.sidebar-tabs .btn.active {
+  background: #ffffff !important;
+}
+
 /* -- Main // Pages */
 .page {
   margin: 1px;

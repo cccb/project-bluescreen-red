@@ -7,7 +7,7 @@
 import React from 'react'
 import {Component} from 'react'
 
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 import {connect} from 'react-redux'
 
@@ -17,24 +17,23 @@ class Sidebar extends Component {
 
     return (
       <div className="nav-sidebar">
-        
         {/* Tabs */}
         <div className="sidebar-tabs">
-          <Link to="/main" className="btn btn-lg btn-info">
+          <NavLink to="/main" className="btn btn-lg btn-info">
             <div className="btn-inner">Main Hall</div>
-          </Link>
+          </NavLink>
 
-          <Link to="/lights" className="btn btn-lg btn-info">
+          <NavLink to="/lights" className="btn btn-lg btn-info">
             <div className="btn-inner">Lights</div>
-          </Link>
+          </NavLink>
 
-          <Link to="/audio" className="btn btn-lg btn-info">
+          <NavLink to="/audio" className="btn btn-lg btn-info">
             <div className="btn-inner">Audio</div>
-          </Link>
+          </NavLink>
 
-          <Link to="/treppe" className="btn btn-lg btn-info">
+          <NavLink to="/treppe" className="btn btn-lg btn-info">
             <div className="btn-inner">Treppe</div>
-          </Link>
+          </NavLink>
         </div>
 
       </div>
