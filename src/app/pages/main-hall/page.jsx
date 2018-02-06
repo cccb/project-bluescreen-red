@@ -56,7 +56,7 @@ class MainHallPage extends Component {
       <div className="page page-mainhall">
 
         <div className="content">
-          <div className="col-md-6">
+          <div className="col-md-8">
 
             <Panel title="Audio">
               <div className="row">
@@ -82,11 +82,18 @@ class MainHallPage extends Component {
 
           </div>
 
-          <div className="col-md-6">
+          <div className="col-md-4">
 
             <Panel title="Beamer">
-
-
+              <div className="beamer-source-select">
+                  <button className="btn btn-lg btn-light btn-block">Beamer An</button>
+                  <br />
+                  <br />
+                  <button className="btn btn-lg btn-light btn-block">HDMI Tisch</button>
+                  <button className="btn btn-lg btn-success btn-block">HDMI Vortrag</button>
+                  <button className="btn btn-lg btn-light btn-block">FOH</button>
+                  <button className="btn btn-lg btn-light btn-block">NUC</button>
+              </div>
             </Panel>
 
           </div>
