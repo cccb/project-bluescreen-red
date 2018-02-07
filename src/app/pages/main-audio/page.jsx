@@ -21,6 +21,7 @@ import {MAIN_MASTER_LEVEL,
         MAIN_DELAY_LEVEL,
         MAIN_BASS_LEVEL,
 
+        MAIN_MUTE_DELAY_TOGGLE,
         MAIN_MUTE_MASTER_TOGGLE,
         MAIN_MUTE_BAR_TOGGLE} from 'config/mappings/audio'
 
@@ -53,6 +54,14 @@ class MainAudioPage extends Component {
 
   onBassChanged(value) {
     debouncedMqttDispatch(mqttSetLevelRequest(MAIN_BASS_LEVEL, value));
+  }
+
+  onDelayChanged(value) {
+    debouncedMqttDispatch(mqttSetLevelRequest(MAIN_DELAY_LEVEL, value));
+  }
+
+  onDelayMuteToggle(nextState) {
+    mqttDispatch(mqttSetToggleRequest(MAIN_MUTE_DELAY_TOGGLE, nextState));
   }
 
   onMasterVolumeMuteToggle(nextState) {
@@ -103,10 +112,22 @@ class MainAudioPage extends Component {
           <div className="col-md-4">
             <Panel title="Sound">
               <div className="row">
-                <div className="col-md-12 box-centered">
+                <div className="col-md-6 box-centered">
                   <VolumeControl title="Bass"
                                  level={this.props.bassLevel}
                                  onchange={(value) => this.onBassChanged(value)} />
+                </div>
+                <div className="col-md-6 box-centered">
+                  <VolumeControl title="Delay"
+                                 level={this.props.delayLevel}
+                                 onchange={(value) => this.onDelayChanged(value)} />
+
+                  <div className="box-ctrl">
+                    <Toggle onToggle={(s) => this.onDelayMuteToggle(s)}
+                            active={this.props.delayMute}>
+                         Mute
+                    </Toggle>
+                  </div>
 
                 </div>
               </div>
@@ -133,9 +154,11 @@ export default connect(
     barVolumeLevel: state.mainAudio.barLevel,
 
     bassLevel: state.mainAudio.bassLevel,
+    delayLevel: state.mainAudio.delayLevel,
 
     barMute: state.mainAudio.barMute,
-    masterVolumeMute: state.mainAudio.masterVolumeMute
+    masterVolumeMute: state.mainAudio.masterVolumeMute,
+    delayMute: state.mainAudio.delayMute
   })
 )(MainAudioPage);
 

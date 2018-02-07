@@ -55,7 +55,7 @@ const remap8 = remap.bind(remap, 0, 100, 0, 255);
 
 
 /*
- * Update state after successful set level 
+ * Update state after successful set level
  */
 function _handleSetLevel(state, levelId, value) {
   let next = Object.assign({}, state);
