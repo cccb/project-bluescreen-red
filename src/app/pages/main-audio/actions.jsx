@@ -18,9 +18,9 @@ export const MQTT_GET_SOURCES_REQUEST =
 export const MQTT_GET_SOURCES_SUCCESS =
              "@@mqtt/v1/mainhall/soundweb/GET_SOURCES_SUCCESS";
 
-export const MQTT_SET_LEVEL_REQUEST = 
+export const MQTT_SET_LEVEL_REQUEST =
              "@@mqtt/v1/mainhall/soundweb/SET_LEVEL_REQUEST";
-export const MQTT_SET_LEVEL_SUCCESS = 
+export const MQTT_SET_LEVEL_SUCCESS =
              "@@mqtt/v1/mainhall/soundweb/SET_LEVEL_SUCCESS";
 
 export const MQTT_SET_TOGGLE_REQUEST =
