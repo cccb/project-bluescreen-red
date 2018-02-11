@@ -61,10 +61,10 @@ class LightsPage extends Component {
               <LightControl title="FOH"
                             level={this.props.fohLevel}
                             onchange={(v) => this.onSliderChange(ID_FOH, v)} />
-              <LightControl title="Desk / Wall"
+              <LightControl title="Wall"
                             level={this.props.deskWallLevel}
                             onchange={(v) => this.onSliderChange(ID_DESK_WALL, v)} />
-              <LightControl title="Desk / Bar"
+              <LightControl title="Bar"
                             level={this.props.deskBarLevel}
                             onchange={(v) => this.onSliderChange(ID_DESK_BAR, v)} />
             </div>

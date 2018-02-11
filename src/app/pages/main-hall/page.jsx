@@ -60,10 +60,10 @@ class MainHallPage extends Component {
 
             <Panel title="Audio">
               <div className="row">
-                <div className="col-md-4 box-centered">
+                <div className="col-xs-4 box-centered">
                   <VolumeControl title="Master Volume"
-                                 level={this.props.masterVolumeLevel}
-                                 onchange={(value) => this.onMasterVolumeChanged(value)} />
+                                   level={this.props.masterVolumeLevel}
+                                   onchange={(value) => this.onMasterVolumeChanged(value)} />
 
                   <div className="box-ctrl">
                     <Toggle onToggle={(s) => this.onMasterVolumeMuteToggle(s)}
@@ -73,7 +73,7 @@ class MainHallPage extends Component {
                   </div>
                 </div>
 
-                <div className="col-md-8">
+                <div className="col-xs-8">
                   <AudioSourceSelect />
                 </div>
 
