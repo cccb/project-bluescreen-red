@@ -56,20 +56,20 @@ class LightPresets extends Component {
 
     return (
       <Panel title={panelTitle} className="panel-grey">
-        <div className="controls-row">
-          <div className="controls-ctrl">
+        <div className="controls-row row">
+          <div className="controls-ctrl col-sm-6 col-md-3">
             <button onClick={(e) => this.setPresetDefault()}
                     className="btn btn-success btn-block btn-lg">Das Übliche(TM)</button>
           </div>
-          <div className="controls-ctrl">
+          <div className="controls-ctrl col-sm-6 col-md-3">
             <button onClick={(e) => this.setPresetDark()}
                     className="btn btn-primary btn-block btn-lg">Dunkel</button>
           </div>
-          <div className="controls-ctrl">
+          <div className="controls-ctrl col-sm-6 col-md-3">
             <button onClick={(e) => this.setPresetBright()}
                     className="btn btn-light btn-block btn-lg">Putzlicht</button>
           </div>
-          <div className="controls-ctrl">
+          <div className="controls-ctrl col-sm-6 col-md-3">
             <button onClick={(e) => this.setPresetOff()}
                     className="btn btn-danger btn-block btn-lg">Aus</button>
           </div>
