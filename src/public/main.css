@@ -15,6 +15,7 @@
 
 .app-main {
     flex: 1 1;
+    margin: 0px;
 }
 
 /* -- Navigation */
@@ -62,15 +63,15 @@
 .app-content {
   flex: 1 1;
   margin-top: 10px;
+  padding: 0px;
 }
 
 
 .nav-sidebar {
+  margin-top: 10px;
   background: #0000aa;
   width: 100%;
   padding: 10px;
-  margin: 10px;
-
   display: flex;
   flex-direction: column;
 }
@@ -78,8 +79,8 @@
 .sidebar-tabs {
   border: 1px solid white; 
   flex: 1;
-
   padding: 10px;
+  margin: 0px;
 }
 
 .sidebar-tabs .btn {
@@ -92,10 +93,6 @@
 }
 
 /* -- Main // Pages */
-.page {
-  margin: 1px;
-}
-
 .grid {
   display: flex;
   flex-direction: row;
@@ -160,6 +157,9 @@
                                   supported by Chrome and Opera */
 }
 
+.page-lights {
+  margin: 0px;
+}
 
 .light-ctrl {
   flex: 1;
@@ -237,7 +237,13 @@
 }
 
 .beamer-source-select {
-    padding: 20px;
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.beamer-button {
+    margin-bottom: 20px;
 }
 
 .page-mainhall .audio-selector {

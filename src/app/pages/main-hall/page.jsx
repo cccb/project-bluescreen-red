@@ -83,19 +83,17 @@ class MainHallPage extends Component {
           </div>
 
           <div className="col-md-4">
-
             <Panel title="Beamer">
-              <div className="beamer-source-select">
-                  <button className="btn btn-lg btn-light btn-block">Beamer An</button>
+              <div className="beamer-source-select row">
+                  <div className="beamer-button col-md-12"><button className="btn btn-lg btn-light btn-block">Beamer An</button></div>
                   <br />
                   <br />
-                  <button className="btn btn-lg btn-light btn-block">HDMI Tisch</button>
-                  <button className="btn btn-lg btn-success btn-block">HDMI Vortrag</button>
-                  <button className="btn btn-lg btn-light btn-block">FOH</button>
-                  <button className="btn btn-lg btn-light btn-block">NUC</button>
+                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-light btn-block">HDMI Tisch</button></div>
+                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-success btn-block">HDMI Vortrag</button></div>
+                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-light btn-block">FOH</button></div>
+                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-light btn-block">NUC</button></div>
               </div>
             </Panel>
-
           </div>
 
           <div className="col-md-12">
