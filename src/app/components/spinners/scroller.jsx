@@ -24,7 +24,7 @@ export default class Scroller extends Component {
   }
 
   componentDidMount() {
-    let speed = this.props.speed || 10;
+    let speed = this.props.speed || 8;
 
     this.timer = setInterval(() => {
       this.updateText();
