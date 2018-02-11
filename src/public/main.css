@@ -56,7 +56,6 @@
 .app-left {
   flex: 0;
   flex-basis: 250px;
-  
   display: flex;
 }
 
@@ -259,3 +258,10 @@
 .page-mainhall .audio-selector {
 	width: 100%;
 }
+
+@media (min-width: 992px) {
+    .app-left {
+      height: calc(100% - 10px);
+    }
+}
+
