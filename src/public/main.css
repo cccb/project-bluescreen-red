@@ -56,7 +56,6 @@
 .app-left {
   flex: 0;
   flex-basis: 250px;
-  
   display: flex;
 }
 
@@ -212,6 +211,16 @@
     margin-right: auto;
 }
 
+.hdmi-channel-input {
+    padding-top: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.hdmi-channel-input .col-md-12 {
+    margin-bottom: 20px;
+}
+
 .box-ctrl button {
     margin-bottom: 10px;
     margin-left: auto;
@@ -249,3 +258,10 @@
 .page-mainhall .audio-selector {
 	width: 100%;
 }
+
+@media (min-width: 992px) {
+    .app-left {
+      height: calc(100% - 10px);
+    }
+}
+

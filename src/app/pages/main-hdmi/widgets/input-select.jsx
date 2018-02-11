@@ -94,15 +94,23 @@ export default class HdmiInputSelect extends Component {
     const output = this.props.output;
 
     return(
-      <div className="hdmi-channel-input">
-        <ChannelButton input={IN_DESK}
-                       output={output}>Tisch</ChannelButton>
-        <ChannelButton input={IN_TALK}
-                       output={output}>Vortrag</ChannelButton>
-        <ChannelButton input={IN_FOH}
-                       output={output}>FOH</ChannelButton>
-        <ChannelButton input={IN_NUC}
-                       output={output}>NUC</ChannelButton>
+      <div className="hdmi-channel-input col-md-12">
+        <div className="col-xs-6 col-md-12">
+          <ChannelButton input={IN_DESK}
+                         output={output}>Table</ChannelButton>
+        </div>
+        <div className="col-xs-6 col-md-12">
+          <ChannelButton input={IN_TALK}
+                         output={output}>Keksdose</ChannelButton>
+        </div>
+        <div className="col-xs-6 col-md-12">
+          <ChannelButton input={IN_FOH}
+                         output={output}>FOH</ChannelButton>
+        </div>
+        <div className="col-xs-6 col-md-12">
+          <ChannelButton input={IN_NUC}
+                         output={output}>Sonic</ChannelButton>
+        </div>
       </div>
     );
   }
