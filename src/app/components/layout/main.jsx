@@ -13,10 +13,10 @@ export default class MainLayout extends Component {
       <div className="app">
         <TitleBar />
         <div className="app-main row">
-          <div className="app-left col-md-4">
+          <div className="app-left col-md-2">
             <Sidebar />
           </div>
-          <div className="app-content col-md-8">
+          <div className="app-content col-md-10">
             {this.props.children}
           </div>
         </div>

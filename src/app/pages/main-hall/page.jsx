@@ -87,16 +87,14 @@ class MainHallPage extends Component {
           </div>
 
           <div className="col-md-4">
-
             <Panel title="Beamer">
-              <div className="beamer-source-select">
-                  <button className="btn btn-lg btn-light btn-block">Beamer An</button>
+              <div className="beamer-source-select row">
+                  <div className="beamer-button col-md-12"><button className="btn btn-lg btn-light btn-block">Beamer An</button></div>
                   <br />
                   <br />
                   <HdmiInputSelect output={OUT_BEAMER} />
               </div>
             </Panel>
-
           </div>
 
           <div className="col-md-12">

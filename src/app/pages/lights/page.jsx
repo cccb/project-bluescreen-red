@@ -52,7 +52,8 @@ class LightsPage extends Component {
 
   render() {
     return (
-      <div className="page page-lights noselect">
+      <div className="page page-lights noselect row">
+        <div className="col-md-12">
           <Panel title="Lights Control">
             <div className="grid">
               <LightControl title="Entry"
@@ -69,8 +70,11 @@ class LightsPage extends Component {
                             onchange={(v) => this.onSliderChange(ID_DESK_BAR, v)} />
             </div>
           </Panel>
-
+        </div>
+        
+        <div className="col-md-12">
           <LightPresets  />
+        </div>
 
       </div>
     );
