@@ -13,6 +13,8 @@ import {fmtPercent} from 'utils/fmt'
 
 import {mqttDispatch} from 'utils/mqtt'
 
+import {OUT_BEAMER} from 'config/mappings/hdmi'
+
 import {MAIN_MASTER_LEVEL,
         MAIN_MUTE_MASTER_TOGGLE} from 'config/mappings/audio'
 
@@ -26,6 +28,8 @@ import {debounce} from 'lodash'
 
 import LightPresets from 'pages/lights/widgets/presets'
 import AudioSourceSelect from 'pages/main-audio/widgets/source-select'
+import HdmiInputSelect from 'pages/main-hdmi/widgets/input-select'
+
 
 
 // Ratelimit updates
@@ -88,10 +92,7 @@ class MainHallPage extends Component {
                   <div className="beamer-button col-md-12"><button className="btn btn-lg btn-light btn-block">Beamer An</button></div>
                   <br />
                   <br />
-                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-light btn-block">HDMI Tisch</button></div>
-                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-success btn-block">HDMI Vortrag</button></div>
-                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-light btn-block">FOH</button></div>
-                  <div className="beamer-button col-xs-6 col-md-12"><button className="btn btn-lg btn-light btn-block">NUC</button></div>
+                  <HdmiInputSelect output={OUT_BEAMER} />
               </div>
             </Panel>
           </div>
