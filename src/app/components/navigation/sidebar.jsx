@@ -39,7 +39,7 @@ class Sidebar extends Component {
 
           <div className="col-xs-6 col-md-12">
             <NavLink to="/treppe" className="btn btn-lg btn-info">
-              <div className="btn-inner">Treppe</div>
+              <div className="btn-inner">Stairs</div>
             </NavLink>
           </div>
 

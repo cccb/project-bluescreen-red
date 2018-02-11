@@ -51,14 +51,14 @@ class SourceSelect extends Component {
          <div className="audio-selector col-sm-6 col-md-3">
             <SourceButton active={this.props.selectedId == MAIN_SOURCE_DESK}
                           sourceId={MAIN_SOURCE_DESK}
-                          onClick={this.onSetSourceClicked}>Tisch
+                          onClick={this.onSetSourceClicked}>Table AUX
             </SourceButton>
          </div>
  
          <div className="audio-selector col-sm-6 col-md-3">
             <SourceButton active={this.props.selectedId == MAIN_SOURCE_HDMI}
                           sourceId={MAIN_SOURCE_HDMI}
-                          onClick={this.onSetSourceClicked}>HDMI / Beamer
+                          onClick={this.onSetSourceClicked}>HDMI / Projector
             </SourceButton>
          </div>
 
@@ -72,7 +72,7 @@ class SourceSelect extends Component {
          <div className="audio-selector col-sm-6 col-md-3">
             <SourceButton active={this.props.selectedId == MAIN_SOURCE_FOH}
                           sourceId={MAIN_SOURCE_FOH}
-                          onClick={this.onSetSourceClicked}>Mischpult
+                          onClick={this.onSetSourceClicked}>VOC Mixer
             </SourceButton>
          </div>
       </div>
