@@ -10,6 +10,11 @@ import {IN_DESK,
         IN_FOH,
         IN_NUC} from 'config/mappings/hdmi'
 
+import {mqttGetChannelInputsRequest,
+        
+        mqttSetChannelAInputRequest,
+        mqttSetChannelBInputRequest} from '../actions'
+
 
 import Scroller from 'components/spinners/scroller'
 
@@ -17,11 +22,18 @@ class ChannelButtonView extends Component {
 
   onClick() {
     // Handle channel select
+    let input = this.props.input;
+    let output = this.props.output;
+
+    if(output == "A") {
+      mqttDispatch(mqttSetChannelAInputRequest(input));
+    }
+    else {
+      mqttDispatch(mqttSetChannelBInputRequest(input));
+    }
   }
 
   render() {
-    console.log(this.props);
-
     let inProgress = false;
     let isSelected = false;
 
@@ -35,8 +47,9 @@ class ChannelButtonView extends Component {
       isSelected = (this.props.input == this.props.selectedB);
     }
 
-    let hasProgress = (this.props.inProgressA >= 0 && this.props.output == "A")
-                    ||(this.props.inProgressB >- 0 && this.props.output == "B");
+    let hasProgress = 
+      (this.props.inProgressA >= 0 && this.props.output == "A") ||
+      (this.props.inProgressB >- 0 && this.props.output == "B");
   
 
     let clsClass = "btn btn-lg btn-block"; 
@@ -49,7 +62,8 @@ class ChannelButtonView extends Component {
     }
 
     return (
-      <button className={clsClass}>
+      <button className={clsClass}
+              onClick={() => this.onClick()}>
         {inProgress && <Scroller />}
         {this.props.children}
         {inProgress && <Scroller rtl={true} />}
@@ -71,6 +85,10 @@ export const ChannelButton = connect(
 
 
 export default class HdmiInputSelect extends Component {
+  componentDidMount() {
+    // Update selected state
+    mqttDispatch(mqttGetChannelInputsRequest());
+  }
 
   render() {
     const output = this.props.output;
