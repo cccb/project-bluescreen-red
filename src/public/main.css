@@ -15,6 +15,7 @@
 
 .app-main {
     flex: 1 1;
+    margin: 0px;
 }
 
 /* -- Navigation */
@@ -52,29 +53,24 @@
 }
 
 /* Sidebar navigation */
-.app-main {
-  display: flex;
-  flex-direction: row;
-}
-
 .app-left {
   flex: 0;
   flex-basis: 250px;
-  
   display: flex;
 }
 
 .app-content {
   flex: 1 1;
+  margin-top: 10px;
+  padding: 0px;
 }
 
 
 .nav-sidebar {
+  margin-top: 10px;
   background: #0000aa;
   width: 100%;
   padding: 10px;
-  margin: 10px;
-
   display: flex;
   flex-direction: column;
 }
@@ -82,8 +78,8 @@
 .sidebar-tabs {
   border: 1px solid white; 
   flex: 1;
-
   padding: 10px;
+  margin: 0px;
 }
 
 .sidebar-tabs .btn {
@@ -96,10 +92,6 @@
 }
 
 /* -- Main // Pages */
-.page {
-  margin: 1px;
-}
-
 .grid {
   display: flex;
   flex-direction: row;
@@ -116,7 +108,6 @@
   background: #0000aa;
   color: #aaaaaa;
   padding: 10px;
-  margin: 10px;
 }
 
 .panel-grey {
@@ -165,6 +156,9 @@
                                   supported by Chrome and Opera */
 }
 
+.page-lights {
+  margin: 0px;
+}
 
 .light-ctrl {
   flex: 1;
@@ -197,20 +191,14 @@
 }
 
 .audio-source-h .panel-input-sources {
-  display: flex;
-  flex-direction: row;
-
   margin: 0px;
-  padding: 0px;
-
+  margin-bottom: -8px;
+  padding: 10px;
   background: #0000aa;
 }
 
 .audio-source-h .panel-input-sources button {
-    display: inline;
-
-    flex: 1;
-    margin: 10px;
+    margin-bottom: 20px;
 }
 
 
@@ -223,8 +211,18 @@
     margin-right: auto;
 }
 
+.hdmi-channel-input {
+    padding-top: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.hdmi-channel-input .col-md-12 {
+    margin-bottom: 20px;
+}
+
 .box-ctrl button {
-    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: auto;
     margin-right: auto;
 
@@ -232,16 +230,14 @@
 }
 
 .controls-row {
-   display: flex;
-   flex-direction: row;
+	padding: 10px;
+	margin-bottom: -15px;
 }
 
 .controls-row .controls-ctrl {
     display: flex;
-
+    margin-bottom: 20px;
     flex: 1;
-    margin: 10px;
-
     flex-direction: column;
 }
 
@@ -250,6 +246,22 @@
 }
 
 .beamer-source-select {
-    padding: 20px;
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.beamer-button {
+    margin-bottom: 20px;
+}
+
+.page-mainhall .audio-selector {
+	width: 100%;
+}
+
+@media (min-width: 992px) {
+    .app-left {
+      height: calc(100% - 10px);
+    }
 }
 

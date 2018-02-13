@@ -13,6 +13,8 @@ import {fmtPercent} from 'utils/fmt'
 
 import {mqttDispatch} from 'utils/mqtt'
 
+import {OUT_BEAMER} from 'config/mappings/hdmi'
+
 import {MAIN_MASTER_LEVEL,
         MAIN_MUTE_MASTER_TOGGLE} from 'config/mappings/audio'
 
@@ -26,6 +28,8 @@ import {debounce} from 'lodash'
 
 import LightPresets from 'pages/lights/widgets/presets'
 import AudioSourceSelect from 'pages/main-audio/widgets/source-select'
+import HdmiInputSelect from 'pages/main-hdmi/widgets/input-select'
+
 
 
 // Ratelimit updates
@@ -60,10 +64,10 @@ class MainHallPage extends Component {
 
             <Panel title="Audio">
               <div className="row">
-                <div className="col-md-4 box-centered">
+                <div className="col-xs-4 box-centered">
                   <VolumeControl title="Master Volume"
-                                 level={this.props.masterVolumeLevel}
-                                 onchange={(value) => this.onMasterVolumeChanged(value)} />
+                                   level={this.props.masterVolumeLevel}
+                                   onchange={(value) => this.onMasterVolumeChanged(value)} />
 
                   <div className="box-ctrl">
                     <Toggle onToggle={(s) => this.onMasterVolumeMuteToggle(s)}
@@ -73,7 +77,7 @@ class MainHallPage extends Component {
                   </div>
                 </div>
 
-                <div className="col-md-8">
+                <div className="col-xs-8">
                   <AudioSourceSelect />
                 </div>
 
@@ -83,19 +87,12 @@ class MainHallPage extends Component {
           </div>
 
           <div className="col-md-4">
-
-            <Panel title="Beamer">
-              <div className="beamer-source-select">
-                  <button className="btn btn-lg btn-light btn-block">Beamer An</button>
-                  <br />
-                  <br />
-                  <button className="btn btn-lg btn-light btn-block">HDMI Tisch</button>
-                  <button className="btn btn-lg btn-success btn-block">HDMI Vortrag</button>
-                  <button className="btn btn-lg btn-light btn-block">FOH</button>
-                  <button className="btn btn-lg btn-light btn-block">NUC</button>
+            <Panel title="Video">
+              <div className="beamer-source-select row">
+                  <div className="beamer-button col-md-12"><button className="btn btn-lg btn-light btn-block">Projector Power</button></div>
+                  <HdmiInputSelect output={OUT_BEAMER} />
               </div>
             </Panel>
-
           </div>
 
           <div className="col-md-12">

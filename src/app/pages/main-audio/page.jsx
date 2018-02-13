@@ -76,11 +76,11 @@ class MainAudioPage extends Component {
     return (
       <div className="page page-mainaudio">
         <div className="content">
-          <div className="col-md-8">
+          <div className="col-md-3">
             <Panel title="Volume">
 
-              <div className="row">
-                <div className="col-md-6 box-centered">
+              <div className="row box-centered">
+                <div className="col-md-12 box-centered">
                   <VolumeControl title="Master"
                                  level={this.props.masterVolumeLevel}
                                  onchange={(value) => this.onMasterVolumeChanged(value)} />
@@ -93,7 +93,28 @@ class MainAudioPage extends Component {
                   </div>
                 </div>
 
-                <div className="col-md-6 box-centered">
+              </div>
+            </Panel>
+          </div>
+
+          <div className="col-md-6">
+            <Panel title="Speaker">
+
+              <div className="row box-centered">
+                <div className="col-xs-6 box-centered">
+                  <VolumeControl title="Back"
+                                 level={this.props.delayLevel}
+                                 onchange={(value) => this.onDelayChanged(value)} />
+
+                  <div className="box-ctrl">
+                    <Toggle onToggle={(s) => this.onDelayMuteToggle(s)}
+                            active={this.props.delayMute}>
+                         Mute
+                    </Toggle>
+                  </div>
+                </div>
+  
+				<div className="col-xs-6 box-centered">
                   <VolumeControl title="Bar"
                                  level={this.props.barVolumeLevel}
                                  onchange={(value) => this.onBarVolumeChanged(value)} />
@@ -107,28 +128,16 @@ class MainAudioPage extends Component {
                 </div>
               </div>
             </Panel>
+
           </div>
 
-          <div className="col-md-4">
+          <div className="col-md-3">
             <Panel title="Sound">
               <div className="row">
-                <div className="col-md-6 box-centered">
+                <div className="col-md-12 box-centered">
                   <VolumeControl title="Bass"
                                  level={this.props.bassLevel}
                                  onchange={(value) => this.onBassChanged(value)} />
-                </div>
-                <div className="col-md-6 box-centered">
-                  <VolumeControl title="Delay"
-                                 level={this.props.delayLevel}
-                                 onchange={(value) => this.onDelayChanged(value)} />
-
-                  <div className="box-ctrl">
-                    <Toggle onToggle={(s) => this.onDelayMuteToggle(s)}
-                            active={this.props.delayMute}>
-                         Mute
-                    </Toggle>
-                  </div>
-
                 </div>
               </div>
             </Panel>

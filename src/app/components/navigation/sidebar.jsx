@@ -18,22 +18,31 @@ class Sidebar extends Component {
     return (
       <div className="nav-sidebar">
         {/* Tabs */}
-        <div className="sidebar-tabs">
-          <NavLink to="/main" className="btn btn-lg btn-info">
-            <div className="btn-inner">Main Hall</div>
-          </NavLink>
+        <div className="sidebar-tabs row">
+          <div className="col-xs-6 col-md-12">
+            <NavLink to="/main" className="btn btn-lg btn-info">
+              <div className="btn-inner">Main Hall</div>
+            </NavLink>
+          </div>
+          
+          <div className="col-xs-6 col-md-12">
+            <NavLink to="/lights" className="btn btn-lg btn-info">
+              <div className="btn-inner">Lights</div>
+            </NavLink>
+          </div>
 
-          <NavLink to="/lights" className="btn btn-lg btn-info">
-            <div className="btn-inner">Lights</div>
-          </NavLink>
+          <div className="col-xs-6 col-md-12">
+            <NavLink to="/audio" className="btn btn-lg btn-info">
+              <div className="btn-inner">Audio</div>
+            </NavLink>
+          </div>
 
-          <NavLink to="/audio" className="btn btn-lg btn-info">
-            <div className="btn-inner">Audio</div>
-          </NavLink>
+          <div className="col-xs-6 col-md-12">
+            <NavLink to="/treppe" className="btn btn-lg btn-info">
+              <div className="btn-inner">Stairs</div>
+            </NavLink>
+          </div>
 
-          <NavLink to="/treppe" className="btn btn-lg btn-info">
-            <div className="btn-inner">Treppe</div>
-          </NavLink>
         </div>
 
       </div>
