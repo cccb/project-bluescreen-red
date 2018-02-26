@@ -11,7 +11,6 @@ import {IN_DESK,
         IN_NUC} from 'config/mappings/hdmi'
 
 import {mqttGetChannelInputsRequest,
-        
         mqttSetChannelAInputRequest,
         mqttSetChannelBInputRequest} from '../actions'
 
@@ -47,14 +46,14 @@ class ChannelButtonView extends Component {
       isSelected = (this.props.input == this.props.selectedB);
     }
 
-    let hasProgress = 
+    let hasProgress =
       (this.props.inProgressA >= 0 && this.props.output == "A") ||
       (this.props.inProgressB >- 0 && this.props.output == "B");
-  
 
-    let clsClass = "btn btn-lg btn-block"; 
+
+    let clsClass = "btn btn-lg btn-block";
     if (isSelected && !hasProgress) {
-      clsClass += " btn-success"; 
+      clsClass += " btn-success";
     }
 
     if (inProgress) {
@@ -105,7 +104,7 @@ export default class HdmiInputSelect extends Component {
         </div>
         <div className="col-xs-6 col-md-12">
           <ChannelButton input={IN_FOH}
-                         output={output}>FOH</ChannelButton>
+                         output={output}>AppleTV</ChannelButton>
         </div>
         <div className="col-xs-6 col-md-12">
           <ChannelButton input={IN_NUC}

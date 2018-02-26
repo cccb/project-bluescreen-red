@@ -4,7 +4,7 @@
  */
 
 import {MQTT_GET_CHANNEL_INPUTS_SUCCESS,
-        
+
         MQTT_SET_CHANNEL_A_INPUT_START,
         MQTT_SET_CHANNEL_A_INPUT_CANCEL,
         MQTT_SET_CHANNEL_A_INPUT_SUCCESS,
@@ -19,7 +19,7 @@ import {MQTT_GET_CHANNEL_INPUTS_SUCCESS,
 const initialState = {
   selectedA: -1,
   selectedB: -1,
- 
+
   inProgressA: -1,
   inProgressB: -1,
 };
