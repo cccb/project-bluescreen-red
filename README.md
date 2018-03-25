@@ -13,6 +13,9 @@ Also see: [Alpaca](https://github.com/cameliot/alpaca) (Go) and
 
 ## Some Screenshots
 
+![Main Hall](https://raw.githubusercontent.com/cccb/project-bluescreen-red/master/doc/propaganda/bs_main.png)
+![Lights](https://raw.githubusercontent.com/cccb/project-bluescreen-red/master/doc/propaganda/bs_lights.png)
+![Audio](https://raw.githubusercontent.com/cccb/project-bluescreen-red/master/doc/propaganda/bs_audio.png)
 
 
 
