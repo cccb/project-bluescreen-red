@@ -8,7 +8,7 @@ import mainHallReducer from 'pages/main-hall/reducer'
 import mainAudioReducer from 'pages/main-audio/reducer'
 import mainHdmiReducer from 'pages/main-hdmi/reducer'
 import lightsReducer from 'pages/lights/reducer'
-import klang3Reducer from 'pages/klang3/reducer'
+import soundboardReducer from 'pages/soundboard/reducer'
 import configReducer from 'utils/config/reducer'
 
 export default combineReducers({
@@ -17,6 +17,7 @@ export default combineReducers({
   mainAudio: mainAudioReducer,
   mainHdmi: mainHdmiReducer,
   lights: lightsReducer,
+  soundboard: soundboardReducer,
   config: configReducer
 });
 
