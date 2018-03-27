@@ -37,7 +37,7 @@ export function mqttGroupsListRequest() {
 
 export function mqttSamplesListRequest(group="*") {
   return {
-    type: MQTT_GROUPS_LIST_REQUEST,
+    type: MQTT_SAMPLES_LIST_REQUEST,
     payload: {
       group: group
     },
