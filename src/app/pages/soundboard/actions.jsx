@@ -27,6 +27,8 @@ export const MQTT_SAMPLE_STOP_SUCCESS =
 export const MQTT_SAMPLE_STOP_ERROR =
              "@@mqtt/v1/mainhall/sampler/SAMPLE_STOP_ERROR";
 
+export const SELECT_GROUP =
+             "@sampler/SELECT_GROUP";
 
 export function mqttGroupsListRequest() {
   return {
@@ -57,6 +59,16 @@ export function mqttSampleStopRequest(sampleId) {
   return {
     type: MQTT_SAMPLE_STOP_REQUEST,
     payload: {},
+  }
+}
+
+
+export function selectGroup(group) {
+  return {
+    type: SELECT_GROUP,
+    payload: {
+      group: group,
+    }
   }
 }
 

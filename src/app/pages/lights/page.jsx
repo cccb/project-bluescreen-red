@@ -71,7 +71,7 @@ class LightsPage extends Component {
             </div>
           </Panel>
         </div>
-        
+
         <div className="col-md-12">
           <LightPresets  />
         </div>
