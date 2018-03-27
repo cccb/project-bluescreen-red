@@ -8,6 +8,7 @@ import {connect} from 'react-redux'
 
 import Panel from 'components/containers/panel'
 
+import Scroller from 'components/spinners/scroller'
 
 import {mqttDispatch} from 'utils/mqtt'
 
@@ -61,8 +62,15 @@ class Samples extends Component {
     }
 
     let samples = this.props.samples.map((sample) => {
-      return(
+      let btnClass = "btn btn-lg btn-info btn-sampler-sample";
 
+      return(
+        <button className={btnClass} key={sample.id}
+                onClick={() => this.props.onClick(sample)}>
+          {sample.isPlaying && <Scroller />}
+          {sample.title}
+          {sample.isPlaying && <Scroller rtl={true} />}
+        </button>
       );
     });
 
@@ -85,6 +93,14 @@ class SoundboardPage extends Component {
     this.props.dispatch(selectGroup(group));
   }
 
+  toggleSample(sample) {
+    if(sample.isPlaying) {
+      mqttDispatch(mqttSampleStopRequest(sample.id));
+    } else {
+      mqttDispatch(mqttSampleStartRequest(sample.id));
+    }
+  }
+
   render() {
     return (
       <div className="page page-soundboard noselect row">
@@ -98,7 +114,8 @@ class SoundboardPage extends Component {
 
         <div className="col-md-12">
           <Panel className="panel-grey" title="Samples">
-            Fnord.
+            <Samples samples={this.props.samples}
+                     onClick={(sample) => this.toggleSample(sample)} />
           </Panel>
         </div>
       </div>

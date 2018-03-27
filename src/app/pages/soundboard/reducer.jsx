@@ -38,6 +38,8 @@ function receiveSamples(state, action) {
       samples[sample.group] = [];
     }
 
+    sample.isPlaying = false;
+
     samples[sample.group].push(sample);
 
     if(groups.indexOf(sample.group) == -1) {
@@ -55,6 +57,42 @@ function receiveSamples(state, action) {
 }
 
 
+function getSampleById(samples, sampleId) {
+  for(let group in samples) {
+    for(let sample of samples[group]) {
+      if(sample.id == sampleId) {
+        return sample;
+      }
+    }
+  }
+
+  return null;
+}
+
+function startSample(state, action) {
+  let nextState = Object.assign({}, state);
+  let sample = getSampleById(nextState.samples, action.payload.sample_id);
+  if (!sample) {
+    return nextState;
+  }
+
+  sample.isPlaying = true;
+
+  return nextState;
+}
+
+function stopSample(state, action) {
+  let nextState = Object.assign({}, state);
+  let sample = getSampleById(nextState.samples, action.payload.sample_id);
+  if (!sample) {
+    return nextState;
+  }
+
+  sample.isPlaying = false;
+
+  return nextState;
+}
+
 export default function reducer(state=initialState, action) {
 
   switch(action.type) {
@@ -65,6 +103,12 @@ export default function reducer(state=initialState, action) {
 
     case MQTT_SAMPLES_LIST_SUCCESS:
       return receiveSamples(state, action);
+
+    case MQTT_SAMPLE_START_SUCCESS:
+      return startSample(state, action);
+
+    case MQTT_SAMPLE_STOP_SUCCESS:
+      return stopSample(state, action);
   }
 
   return state;
