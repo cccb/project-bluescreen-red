@@ -3,7 +3,7 @@
 
 The club control interface.
 
-Make heavy use of [React](https://github.com/facebook/react),
+Makes heavy use of [React](https://github.com/facebook/react) and
 [Redux](https://github.com/reactjs/redux).
 
 Plays nicely together with camelidae.
