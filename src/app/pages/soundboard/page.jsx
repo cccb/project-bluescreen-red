@@ -63,13 +63,15 @@ class Samples extends Component {
 
     let samples = this.props.samples.map((sample) => {
       let btnClass = "btn btn-lg btn-info btn-sampler-sample";
+      let isPlaying = this.props.samplesPlaying.has(sample.id);
 
       return(
         <button className={btnClass} key={sample.id}
                 onClick={() => this.props.onClick(sample)}>
-          {sample.isPlaying && <Scroller />}
+          {isPlaying && <Scroller />}
           {sample.title}
-          {sample.isPlaying && <Scroller rtl={true} />}
+          {isPlaying && <Scroller className="scroller-right" rtl={true} />}
+
         </button>
       );
     });
@@ -94,11 +96,8 @@ class SoundboardPage extends Component {
   }
 
   toggleSample(sample) {
-    if(sample.isPlaying) {
-      mqttDispatch(mqttSampleStopRequest(sample.id));
-    } else {
-      mqttDispatch(mqttSampleStartRequest(sample.id));
-    }
+    // Only start sample. Sounds better.
+    mqttDispatch(mqttSampleStartRequest(sample.id));
   }
 
   render() {
@@ -115,6 +114,7 @@ class SoundboardPage extends Component {
         <div className="col-md-12">
           <Panel className="panel-grey" title="Samples">
             <Samples samples={this.props.samples}
+                     samplesPlaying={this.props.samplesPlaying}
                      onClick={(sample) => this.toggleSample(sample)} />
           </Panel>
         </div>
@@ -129,7 +129,8 @@ export default connect(
   (state) => ({
     groups: state.soundboard.groups,
     selectedGroup: state.soundboard.selectedGroup,
-    samples: state.soundboard.samples[state.soundboard.selectedGroup]
+    samples: state.soundboard.samples[state.soundboard.selectedGroup],
+    samplesPlaying: state.soundboard.samplesPlaying,
   })
 )(SoundboardPage);
 

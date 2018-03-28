@@ -276,7 +276,18 @@
 
 .btn-sampler-sample {
     margin-right: 15px;
-    margin-bottom: 15px
+    margin-bottom: 15px;
+
+    padding-left: 52px;
+    padding-right: 52px;
 }
 
+.btn-sampler-sample .spinner {
+  position: absolute;
+  margin-left: -45px;
+}
+
+.btn-sampler-sample .scroller-right {
+  margin-left: 5px;
+}
 

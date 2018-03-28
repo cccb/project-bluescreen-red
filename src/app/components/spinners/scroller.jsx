@@ -52,8 +52,12 @@ export default class Scroller extends Component {
   }
 
   render() {
+    let spinnerClass = "spinner spinner-scroller";
+    if (this.props.className) {
+      spinnerClass += " " + this.props.className;
+    }
     return (
-      <span className="spinner spinner-scroller">{this.state.text}</span>  
+      <span className={spinnerClass}>{this.state.text}</span>  
     );
   }
 }
