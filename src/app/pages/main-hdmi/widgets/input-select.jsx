@@ -107,14 +107,14 @@ export default class HdmiInputSelect extends Component {
         </div>
         <div className="col-xs-6 col-md-12">
           <ChannelButton
-            input={IN_FOH}
-            onClick={() => this.selectInput(IN_FOH)}>FOH</ChannelButton>
-        </div>
-        <div className="col-xs-6 col-md-12">
-          <ChannelButton
             input={IN_APPLETV}
             onClick={() => this.selectInput(IN_APPLETV)}
           >AppleTV</ChannelButton>
+        </div>
+        <div className="col-xs-6 col-md-12">
+          <ChannelButton
+            input={IN_FOH}
+            onClick={() => this.selectInput(IN_FOH)}>FOH</ChannelButton>
         </div>
       </div>
     );
