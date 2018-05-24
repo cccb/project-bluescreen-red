@@ -19,6 +19,8 @@ import {MQTT_GROUPS_LIST_REQUEST,
 
 
 const initialState = {
+  samplesPlaying: new Set(),
+
   groups: [],
   samples: {},
 
@@ -57,40 +59,22 @@ function receiveSamples(state, action) {
 }
 
 
-function getSampleById(samples, sampleId) {
-  for(let group in samples) {
-    for(let sample of samples[group]) {
-      if(sample.id == sampleId) {
-        return sample;
-      }
-    }
-  }
-
-  return null;
-}
-
 function startSample(state, action) {
-  let nextState = Object.assign({}, state);
-  let sample = getSampleById(nextState.samples, action.payload.sample_id);
-  if (!sample) {
-    return nextState;
-  }
+  let samplesPlaying = new Set(state.samplesPlaying);
+  samplesPlaying.add(action.payload.sample_id);
 
-  sample.isPlaying = true;
-
-  return nextState;
+  return Object.assign({}, state, {
+    samplesPlaying: samplesPlaying 
+  });
 }
 
 function stopSample(state, action) {
-  let nextState = Object.assign({}, state);
-  let sample = getSampleById(nextState.samples, action.payload.sample_id);
-  if (!sample) {
-    return nextState;
-  }
+  let samplesPlaying = new Set(state.samplesPlaying);
+  samplesPlaying.delete(action.payload.sample_id);
 
-  sample.isPlaying = false;
-
-  return nextState;
+  return Object.assign({}, state, {
+    samplesPlaying: samplesPlaying 
+  });
 }
 
 export default function reducer(state=initialState, action) {
