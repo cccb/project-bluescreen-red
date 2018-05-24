@@ -217,6 +217,20 @@
     padding-right: 0px;
 }
 
+.hdmi-channel-input .btn-channel {
+    position: relative;
+}
+
+.hdmi-auto-select-toggle {
+    padding: 0px 10px 10px 10px;
+}
+
+.hdmi-connection-indicator {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
 .hdmi-channel-input .col-md-12 {
     margin-bottom: 20px;
 }
@@ -279,4 +293,6 @@
     margin-bottom: 15px
 }
 
-
+.btn-disabled {
+    background: grey;
+}

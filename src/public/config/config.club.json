@@ -1,0 +1,8 @@
+{
+    "mqtt": {
+        "uri": "ws://mqtt.club.berlin.ccc.de:8083",
+        "user": null,
+        "password": null
+    }
+}
+

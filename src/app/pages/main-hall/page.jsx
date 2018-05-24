@@ -29,6 +29,8 @@ import {debounce} from 'lodash'
 import LightPresets from 'pages/lights/widgets/presets'
 import AudioSourceSelect from 'pages/main-audio/widgets/source-select'
 import HdmiInputSelect from 'pages/main-hdmi/widgets/input-select'
+import HdmiAutoSelectToggle from 'pages/main-hdmi/widgets/auto-select-toggle'
+import HdmiAudioModeStatus from 'pages/main-hdmi/widgets/audio-mode-status'
 
 
 
@@ -89,8 +91,15 @@ class MainHallPage extends Component {
           <div className="col-md-4">
             <Panel title="Video">
               <div className="beamer-source-select row">
-                  <div className="beamer-button col-md-12"><button className="btn btn-lg btn-light btn-block">Projector Power</button></div>
                   <HdmiInputSelect output={OUT_BEAMER} />
+              </div>
+              <div className="beamer-status row">
+                <div className="col-md-6">
+                  <HdmiAutoSelectToggle />
+                </div>
+                <div className="col-md-6">
+                  <HdmiAudioModeStatus />
+                </div>
               </div>
             </Panel>
           </div>
@@ -104,6 +113,9 @@ class MainHallPage extends Component {
   }
 }
 
+/*
+<div className="beamer-button col-md-12"><button className="btn btn-lg btn-light btn-block">Projector Power</button></div>
+*/
 
 export default connect(
   (state) => ({

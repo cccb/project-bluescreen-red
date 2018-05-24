@@ -5,67 +5,60 @@ import {connect} from 'react-redux'
 
 import {mqttDispatch} from 'utils/mqtt'
 
-import {IN_DESK,
-        IN_TALK,
+import {IN_NUC,
+        IN_TABLE,
         IN_FOH,
-        IN_NUC} from 'config/mappings/hdmi'
+        IN_APPLETV,
 
-import {mqttGetChannelInputsRequest,
-        mqttSetChannelAInputRequest,
-        mqttSetChannelBInputRequest} from '../actions'
+        OUT_BEAMER} from 'config/mappings/hdmi'
 
+import {mqttGetSelectedInputRequest,
+        mqttSetSelectedInputRequest,
+
+        mqttGetAudioModeRequest,
+        mqttSetAudioModeRequest,
+
+        mqttGetAutoSelectRequest,
+        mqttSetAutoSelectRequest,
+
+        mqttGetConnectionStatesRequest} from '../actions'
 
 import Scroller from 'components/spinners/scroller'
 
-class ChannelButtonView extends Component {
 
-  onClick() {
-    // Handle channel select
-    let input = this.props.input;
-    let output = this.props.output;
-
-    if(output == "A") {
-      mqttDispatch(mqttSetChannelAInputRequest(input));
-    }
-    else {
-      mqttDispatch(mqttSetChannelBInputRequest(input));
-    }
+function ConnectionIndicator(props) {
+  let status = "";
+  if (props.connected) {
+    status = "♥";
   }
 
+  return (
+    <span className="hdmi-connection-indicator">
+      {status}
+    </span>
+  );
+}
+
+class ChannelButtonView extends Component {
   render() {
-    let inProgress = false;
-    let isSelected = false;
-
     // Determine state
-    if (this.props.output == "A") {
-      inProgress = (this.props.input == this.props.inProgressA);
-      isSelected = (this.props.input == this.props.selectedA);
-    }
-    else {
-      inProgress = (this.props.input == this.props.inProgressB);
-      isSelected = (this.props.input == this.props.selectedB);
-    }
+    let isSelected = (this.props.input == this.props.selected);
+    let isConnected = this.props.connections[this.props.input];
 
-    let hasProgress =
-      (this.props.inProgressA >= 0 && this.props.output == "A") ||
-      (this.props.inProgressB >- 0 && this.props.output == "B");
-
-
-    let clsClass = "btn btn-lg btn-block";
-    if (isSelected && !hasProgress) {
+    let clsClass = "btn btn-lg btn-block btn-channel";
+    if (isSelected) {
       clsClass += " btn-success";
     }
 
-    if (inProgress) {
-      clsClass += " btn-info";
+    if (!isConnected) {
+      clsClass += " btn-disabled";
     }
 
     return (
       <button className={clsClass}
-              onClick={() => this.onClick()}>
-        {inProgress && <Scroller />}
-        {this.props.children}
-        {inProgress && <Scroller rtl={true} />}
+              onClick={this.props.onClick}>
+            {this.props.children}
+            <ConnectionIndicator connected={isConnected} />
       </button>
     );
   }
@@ -73,20 +66,28 @@ class ChannelButtonView extends Component {
 
 export const ChannelButton = connect(
   (state) => ({
-    selectedA: state.mainHdmi.selectedA,
-    selectedB: state.mainHdmi.selectedB,
-
-    inProgressA: state.mainHdmi.inProgressA,
-    inProgressB: state.mainHdmi.inProgressB
+    connections: state.mainHdmi.connections,
+    selected: state.mainHdmi.selectedInput
   })
 )(ChannelButtonView);
 
 
 
+
 export default class HdmiInputSelect extends Component {
   componentDidMount() {
-    // Update selected state
-    mqttDispatch(mqttGetChannelInputsRequest());
+    // Initialize state
+    mqttDispatch(mqttGetSelectedInputRequest());
+    mqttDispatch(mqttGetAudioModeRequest());
+    mqttDispatch(mqttGetConnectionStatesRequest());
+  }
+
+  selectInput(inputId) {
+    mqttDispatch(mqttSetSelectedInputRequest(inputId));
+  }
+
+  setAutoSelect(enabled) {
+    mqttDispatch(mqttSetAutoSelectRequest(enabled));
   }
 
   render() {
@@ -95,20 +96,25 @@ export default class HdmiInputSelect extends Component {
     return(
       <div className="hdmi-channel-input col-md-12">
         <div className="col-xs-6 col-md-12">
-          <ChannelButton input={IN_DESK}
-                         output={output}>Table</ChannelButton>
+          <ChannelButton
+            input={IN_TABLE}
+            onClick={() => this.selectInput(IN_TABLE)}>Table</ChannelButton>
         </div>
         <div className="col-xs-6 col-md-12">
-          <ChannelButton input={IN_TALK}
-                         output={output}>Keksdose</ChannelButton>
+          <ChannelButton
+            input={IN_NUC}
+            onClick={() => this.selectInput(IN_NUC)}>Keksdose</ChannelButton>
         </div>
         <div className="col-xs-6 col-md-12">
-          <ChannelButton input={IN_FOH}
-                         output={output}>AppleTV</ChannelButton>
+          <ChannelButton
+            input={IN_FOH}
+            onClick={() => this.selectInput(IN_FOH)}>FOH</ChannelButton>
         </div>
         <div className="col-xs-6 col-md-12">
-          <ChannelButton input={IN_NUC}
-                         output={output}>Sonic</ChannelButton>
+          <ChannelButton
+            input={IN_APPLETV}
+            onClick={() => this.selectInput(IN_APPLETV)}
+          >AppleTV</ChannelButton>
         </div>
       </div>
     );

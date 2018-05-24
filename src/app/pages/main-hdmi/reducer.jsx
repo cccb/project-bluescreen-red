@@ -3,82 +3,62 @@
  * Main Hall HDMI matrix reducer
  */
 
-import {MQTT_GET_CHANNEL_INPUTS_SUCCESS,
+import {MQTT_GET_SELECTED_INPUT_SUCCESS,
+        MQTT_GET_SELECTED_INPUT_ERROR,
 
-        MQTT_SET_CHANNEL_A_INPUT_START,
-        MQTT_SET_CHANNEL_A_INPUT_CANCEL,
-        MQTT_SET_CHANNEL_A_INPUT_SUCCESS,
-        MQTT_SET_CHANNEL_A_INPUT_ERROR,
+        MQTT_SET_SELECTED_INPUT_SUCCESS,
+        MQTT_SET_SELECTED_INPUT_ERROR,
 
-        MQTT_SET_CHANNEL_B_INPUT_START,
-        MQTT_SET_CHANNEL_B_INPUT_CANCEL,
-        MQTT_SET_CHANNEL_B_INPUT_SUCCESS,
-        MQTT_SET_CHANNEL_B_INPUT_ERROR} from './actions';
+        MQTT_GET_AUDIO_MODE_SUCCESS,
+        MQTT_GET_AUDIO_MODE_ERROR,
 
+        MQTT_SET_AUDIO_MODE_SUCCESS,
+        MQTT_SET_AUDIO_MODE_ERROR,
+
+        MQTT_GET_AUTO_SELECT_SUCCESS,
+        MQTT_GET_AUTO_SELECT_ERROR,
+
+        MQTT_SET_AUTO_SELECT_SUCCESS,
+        MQTT_SET_AUTO_SELECT_ERROR,
+
+        MQTT_GET_CONNECTION_STATES_SUCCESS,
+        MQTT_GET_CONNECTION_STATES_ERROR} from './actions'
 
 const initialState = {
-  selectedA: -1,
-  selectedB: -1,
-
-  inProgressA: -1,
-  inProgressB: -1,
+  connections: [false, false, false, false, false],
+  audioMode: -1,
+  audioModeInfo: "unknown",
+  autoSelect: false,
+  selectedInput: -1,
 };
 
 
 export default function reducer(state=initialState, action) {
   switch (action.type) {
-    case MQTT_GET_CHANNEL_INPUTS_SUCCESS:
+    case MQTT_GET_SELECTED_INPUT_SUCCESS:
+    case MQTT_SET_SELECTED_INPUT_SUCCESS:
       return Object.assign({}, state, {
-        selectedA: action.payload.a,
-        selectedB: action.payload.b
+        selectedInput: action.payload.input_id
       });
 
-    case MQTT_SET_CHANNEL_A_INPUT_START:
+    case MQTT_GET_AUDIO_MODE_SUCCESS:
+    case MQTT_SET_AUDIO_MODE_SUCCESS:
       return Object.assign({}, state, {
-        inProgressA: action.payload.id
+        audioMode: action.payload.mode_id,
+        audioModeInfo: action.payload.mode
       });
 
-    case MQTT_SET_CHANNEL_A_INPUT_CANCEL:
+    case MQTT_GET_AUTO_SELECT_SUCCESS:
+    case MQTT_SET_AUTO_SELECT_SUCCESS:
       return Object.assign({}, state, {
-        inProgressA: -1
+        autoSelect: action.payload.enabled
       });
 
-    case MQTT_SET_CHANNEL_A_INPUT_ERROR:
-      // TODO: Improve error handling
+    case MQTT_GET_CONNECTION_STATES_SUCCESS:
       return Object.assign({}, state, {
-        inProgressA: -1,
-      });
-
-    case MQTT_SET_CHANNEL_A_INPUT_SUCCESS:
-      return Object.assign({}, state, {
-        inProgressA: -1,
-        selectedA: action.payload.id
-      });
-
-
-    case MQTT_SET_CHANNEL_B_INPUT_START:
-      return Object.assign({}, state, {
-        inProgressB: action.payload.id
-      });
-
-    case MQTT_SET_CHANNEL_B_INPUT_CANCEL:
-      return Object.assign({}, state, {
-        inProgressB: -1
-      });
-
-    case MQTT_SET_CHANNEL_B_INPUT_ERROR:
-      // TODO: Improve error handling
-      return Object.assign({}, state, {
-        inProgressB: -1,
-      });
-
-    case MQTT_SET_CHANNEL_B_INPUT_SUCCESS:
-      return Object.assign({}, state, {
-        inProgressB: -1,
-        selectedB: action.payload.id
+        connections: action.payload.connections
       });
   }
-
 
   return state;
 }

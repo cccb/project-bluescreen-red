@@ -155,7 +155,7 @@ function _handleGetSources(state, result) {
 
   for (let source of result) {
     if (source.id == MAIN_SOURCE) {
-      next.sourceId = source.value; 
+      next.sourceId = source.value;
     }
   }
 
