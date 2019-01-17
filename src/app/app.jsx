@@ -122,7 +122,7 @@ loadConfig("/config/config.json").then((config) => {
 .catch((err) => {
   alert("App unconfigured. Please provide a config/config.json");
 });
-window.store = store;
+// window.store = store;
 
 // Mount application on DOM
 ReactDOM.render(

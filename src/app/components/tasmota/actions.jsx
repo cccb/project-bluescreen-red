@@ -1,0 +1,5 @@
+
+export const TASMOTA_TELEMETRY_UPDATE = "@tasmota/TELEMETRY_UPDATE";
+export const TASMOTA_STATUS_UPDATE = "@tasmota/STATUS_UPDATE";
+export const TASMOTA_COMMAND_REQUEST = "@tasmota/COMMAND_REQUEST";
+
