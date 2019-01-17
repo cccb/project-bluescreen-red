@@ -69,7 +69,6 @@ function tasmotaAction(tasmotaPrefix, topic, data) {
   topic = topic.replace(tasmotaPrefix, "");
   // Parse topic
   let tokens = topic.split("/").reverse();
-  console.log("tokens:", tokens);
   if (tokens.length < 3) {
     console.error(
       "Tasmota data needs format: ../<endpoint>/<device>/<state>"
@@ -80,9 +79,7 @@ function tasmotaAction(tasmotaPrefix, topic, data) {
   let device = tokens[1];
   let key = tokens[0].toLowerCase();
 
-  console.log(endpoint);
   let type = TASMOTA_ACTION_TYPES[endpoint];
-  console.log(type);
   if (!type) {
     return null;
   }

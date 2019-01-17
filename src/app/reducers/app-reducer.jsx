@@ -10,6 +10,7 @@ import mainHdmiReducer from 'pages/main-hdmi/reducer'
 import lightsReducer from 'pages/lights/reducer'
 import soundboardReducer from 'pages/soundboard/reducer'
 import configReducer from 'utils/config/reducer'
+import tasmotaReducer from 'components/tasmota/reducer'
 
 export default combineReducers({
   router: routerReducer,
@@ -18,6 +19,7 @@ export default combineReducers({
   mainHdmi: mainHdmiReducer,
   lights: lightsReducer,
   soundboard: soundboardReducer,
-  config: configReducer
+  config: configReducer,
+  tasmota: tasmotaReducer
 });
 
