@@ -3,6 +3,12 @@
         "uri": "ws://mqtt.club.berlin.ccc.de:8083",
         "user": null,
         "password": null
+    },
+    "tasmota": {
+        "prefix": "v2/tasmota",
+        "devices": [
+            { "id": "LED-Keller", "type": "switch" }
+        ]
     }
 }
 
