@@ -32,7 +32,6 @@ import LightPresets from './widgets/presets'
 const debouncedMqttDispatch = debounce(mqttDispatch, 10);
 
 
-
 /*
  * Fine granular lights controll page
  */
