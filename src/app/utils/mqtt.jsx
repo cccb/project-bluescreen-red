@@ -8,12 +8,19 @@ import mqtt from 'mqtt'
 import {
     TASMOTA_TELEMETRY_UPDATE,
     TASMOTA_STATUS_UPDATE,
+    TASMOTA_STATUS_REQUEST,
+    TASMOTA_STATUS_UPDATE_REQUEST,
 } from 'components/tasmota/actions'
 
-// TasMOTA ACtions
+// Tasmota Actions
 const TASMOTA_ACTION_TYPES = {
   "tele": TASMOTA_TELEMETRY_UPDATE,
   "stat": TASMOTA_STATUS_UPDATE,
+};
+
+const TASMOTA_HANDLERS = {
+  [TASMOTA_STATUS_REQUEST]: "cmnd",
+  [TASMOTA_STATUS_UPDATE_REQUEST]: "cmnd",
 };
 
 // Global state because nothing else is sane...
@@ -98,10 +105,48 @@ function tasmotaAction(tasmotaPrefix, topic, data) {
   }
 }
 
+export function mqttDispatchTasmota(action) {
+
+  console.log(TASMOTA_ACTION_TYPES);
+  console.log(action.type);
+
+  const handler = TASMOTA_HANDLERS[action.type];
+  if (!handler) {
+    console.error("Unknown tasmota action:", action);
+    return
+  }
+
+  const deviceId = action.payload.deviceId;
+  const endpoint = action.payload.endpoint.toUpperCase();
+
+  // Generate tasmota topic:
+  // Now, if this was not that shitty designed, e.g.
+  // by using a real middleware, we could... whatever
+  // i'll refactor this some day.
+  let topic = `v2/tasmota/${handler}/${deviceId}/${endpoint}`;
+
+  let payload = "";
+  if (action.payload.value) {
+    payload = action.payload.value;
+  }
+
+  // Retain until we are connected
+  if (!_MQTT_CLIENT || !_MQTT_CLIENT.connected) {
+    _MQTT_BUFFER.push([topic, payload]);
+    return;
+  }
+
+  _MQTT_CLIENT.publish(topic, payload);
+}
+
 
 export function mqttDispatch(action) {
   // Publish message
   let topic = action.type;
+  if (topic.startsWith("@@tasmota/")) {
+    return mqttDispatchTasmota(action);
+  }
+
   if (!topic.startsWith("@@mqtt/")) {
     console.error("MQTT action needs to start with @@mqtt/");
     return;
