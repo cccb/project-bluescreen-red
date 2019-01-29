@@ -24,7 +24,7 @@ class Sidebar extends Component {
               <div className="btn-inner">Main Hall</div>
             </NavLink>
           </div>
-          
+
           <div className="col-xs-6 col-md-12">
             <NavLink to="/lights" className="btn btn-lg btn-info">
               <div className="btn-inner">Lights</div>
@@ -40,6 +40,12 @@ class Sidebar extends Component {
           <div className="col-xs-6 col-md-12">
             <NavLink to="/klang3" className="btn btn-lg btn-info">
               <div className="btn-inner">Klang3</div>
+            </NavLink>
+          </div>
+
+          <div className="col-xs-6 col-md-12">
+            <NavLink to="/tasmota" className="btn btn-lg btn-info">
+              <div className="btn-inner">Misc</div>
             </NavLink>
           </div>
 
