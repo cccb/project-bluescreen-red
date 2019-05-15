@@ -9,6 +9,7 @@ import mainAudioReducer from 'pages/main-audio/reducer'
 import mainHdmiReducer from 'pages/main-hdmi/reducer'
 import lightsReducer from 'pages/lights/reducer'
 import soundboardReducer from 'pages/soundboard/reducer'
+import stairsReducer from 'pages/stairs/reducer'
 import configReducer from 'utils/config/reducer'
 import tasmotaReducer from 'components/tasmota/reducer'
 
@@ -19,6 +20,7 @@ export default combineReducers({
   mainHdmi: mainHdmiReducer,
   lights: lightsReducer,
   soundboard: soundboardReducer,
+  stairs: stairsReducer,
   config: configReducer,
   tasmota: tasmotaReducer
 });
