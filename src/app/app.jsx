@@ -45,6 +45,7 @@ import MainAudioPage  from 'pages/main-audio/page'
 import LightsPage     from 'pages/lights/page'
 import SoundboardPage from 'pages/soundboard/page'
 import TasmotaPage    from 'pages/tasmota/page'
+import StairsPage     from 'pages/stairs/page'
 
 // MQTT
 import {mqttConnect} from 'utils/mqtt'
@@ -106,6 +107,7 @@ class App extends Component {
             <Route path="/lights" component={LightsPage} />
             <Route path="/klang3" component={SoundboardPage} />
             <Route path="/tasmota" component={TasmotaPage} />
+            <Route path="/treppe" component={StairsPage} />
             <Route path="/about" component={AboutPage} />
           </MainLayout>
         </ConnectedRouter>
