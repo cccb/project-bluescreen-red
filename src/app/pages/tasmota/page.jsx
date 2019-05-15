@@ -17,7 +17,6 @@ class TasmotaDashboardPage extends Component {
   }
 
   render() {
-    console.log("redner () ");
     return (
       <div className="page page-tasmota-dashboard noselect row">
         <div className="col-md-12">
