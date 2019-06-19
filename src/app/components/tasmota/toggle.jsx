@@ -55,13 +55,17 @@ class TasmotaToggle extends Component {
   }
 
   render() {
+    let name = this.props.device.id;
+    if (this.props.name) {
+      name = this.props.name;
+    }
     const state = this.props.device.state||{};
     let btnClass = `btn btn-lg ${powerIndicatorClass(state.power)}`;
     return (
         <button className={btnClass}
                 onClick={() => this.togglePower()}>
            <PowerIndicator state={state.power} />
-           {this.props.device.id}
+           {name}
            <PowerIndicator state={state.power} />
         </button>
     );

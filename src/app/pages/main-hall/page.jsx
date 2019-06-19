@@ -32,11 +32,62 @@ import HdmiInputSelect from 'pages/main-hdmi/widgets/input-select'
 import HdmiAutoSelectToggle from 'pages/main-hdmi/widgets/auto-select-toggle'
 import HdmiAudioModeStatus from 'pages/main-hdmi/widgets/audio-mode-status'
 
-
+import TasmotaToggle from 'components/tasmota/toggle'
+import {connectDevice} from 'components/tasmota/devices'
+import {tasmotaStatusUpdateRequest,
+        tasmotaStatusRequest} from 'components/tasmota/actions'
 
 // Ratelimit updates
 const debouncedMqttDispatch = debounce(mqttDispatch, 5);
 
+
+class MusicPowerToggleView extends Component {
+  powerIndicatorClass(state) {
+    if (state == "ON") {
+      return "btn-warning";
+    }
+    return "btn-primary";
+  }
+
+  componentDidMount() {
+    mqttDispatch(tasmotaStatusRequest(
+      this.props.deviceId, "power"
+    ));
+  }
+
+  togglePower() {
+    const state = this.props.device.state||{};
+    if (state.power == "ON") {
+      mqttDispatch(tasmotaStatusUpdateRequest(
+        this.props.deviceId, "power", "off"
+      ));
+    } else {
+      mqttDispatch(tasmotaStatusUpdateRequest(
+        this.props.deviceId, "power", "on"
+      ));
+    }
+  }
+
+  render() {
+    const state = this.props.device.state||{};
+    let title = "Power On";
+    if (state.power === "ON") {
+      title = "Power Off";
+    }
+
+    let btnClass = `btn btn-block btn-lg ${this.powerIndicatorClass(state.power)}`;
+    return (
+      <div className="panel power-button-container">
+          <button onClick={() => this.togglePower()}
+                  className={btnClass}>
+            {title}
+          </button>
+      </div>
+    );
+  }
+}
+
+const MusicPowerToggle = connectDevice(MusicPowerToggleView);
 
 
 class MainHallPage extends Component {
@@ -80,6 +131,7 @@ class MainHallPage extends Component {
                 </div>
 
                 <div className="col-xs-8">
+                  <MusicPowerToggle deviceId="power-music" />
                   <AudioSourceSelect />
                 </div>
 
