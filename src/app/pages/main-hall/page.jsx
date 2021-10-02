@@ -31,6 +31,7 @@ import AudioSourceSelect from 'pages/main-audio/widgets/source-select'
 import HdmiInputSelect from 'pages/main-hdmi/widgets/input-select'
 import HdmiAutoSelectToggle from 'pages/main-hdmi/widgets/auto-select-toggle'
 import HdmiAudioModeStatus from 'pages/main-hdmi/widgets/audio-mode-status'
+import PowerStats from 'components/power-stats/power-stats';
 
 import TasmotaToggle from 'components/tasmota/toggle'
 import {connectDevice} from 'components/tasmota/devices'
@@ -156,8 +157,12 @@ class MainHallPage extends Component {
             </Panel>
           </div>
 
-          <div className="col-md-12">
+          <div className="col-md-8">
             <LightPresets title="Light Presets" />
+          </div>
+
+          <div className="col-md-4">
+            <PowerStats />
           </div>
         </div>
       </div>

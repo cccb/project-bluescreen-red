@@ -107,9 +107,6 @@ function tasmotaAction(tasmotaPrefix, topic, data) {
 
 export function mqttDispatchTasmota(action) {
 
-  console.log(TASMOTA_ACTION_TYPES);
-  console.log(action.type);
-
   const handler = TASMOTA_HANDLERS[action.type];
   if (!handler) {
     console.error("Unknown tasmota action:", action);
@@ -166,6 +163,21 @@ export function mqttDispatch(action) {
 }
 
 
+const statAction = (topic, msg) => {
+    if (topic.startsWith("stat/powermeter/realtimepower")) {
+      return decodeRealtimePowerAction(msg);
+    }
+}
+
+const decodeRealtimePowerAction = (msg) => {
+    const payload = decodeJsonPayload(msg);
+    const type = "@stat/powermeter/REALTIMEPOWER_UPDATE"
+    return {
+      type, payload,
+    };
+};
+
+
 export function mqttConnect(uri, store) {
   // Get Configuration
   let config = store.getState().config.tasmota;
@@ -196,6 +208,8 @@ export function mqttConnect(uri, store) {
       action = mqttAction(topic, msg);
     } else if (topic.startsWith(tasmotaPrefix)) {
       action = tasmotaAction(tasmotaPrefix, topic, msg);
+    } else if (topic.startsWith("stat")) {
+      action = statAction(topic, msg);
     }
     // Dispatch action
     if (action) {
