@@ -55,7 +55,7 @@ const decodeRealtimePower = (stat) => {
           },
           l3: {
               value: parseFloat(stat.channel2.current), 
-              unit: stat.CurrentrUnit
+              unit: stat.CurrentUnit
           },
       },
   };
