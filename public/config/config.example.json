@@ -1,0 +1,14 @@
+{
+    "mqtt": {
+        "uri": "ws://localhost:9001",
+        "user": null,
+        "password": null
+    },
+    "tasmota": {
+        "prefix": "v2/tasmota",
+        "devices": [
+            { "id": "LED-Keller", "type": "switch" }
+        ]
+    }
+}
+

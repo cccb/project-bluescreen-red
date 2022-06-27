@@ -1,0 +1,311 @@
+/*
+ * main.css
+ */
+
+/* -- Layout */
+.app, body, html {
+    background: black;
+}
+
+.app {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-main {
+    flex: 1 1;
+    margin: 0px;
+}
+
+/* -- Navigation */
+.nav-titlebar {
+    flex: 0 0;
+
+    background: #00AAAA;
+    color: white;
+
+    padding: 1px 15px;
+}
+
+.nav-title {
+    float: left;
+}
+
+.nav-version {
+    float: right;
+}
+
+.nav-footer {
+    flex: 0 0;
+    background: #555555;
+    color: white;
+    padding: 1px 15px;
+}
+
+.nav-copyright {
+    float: left;
+}
+
+.nav-license {
+    float: right;
+    color: #aaaaaa;
+}
+
+/* Sidebar navigation */
+.app-left {
+  flex: 0;
+  flex-basis: 250px;
+  display: flex;
+}
+
+.app-content {
+  flex: 1 1;
+  margin-top: 10px;
+  padding: 0px;
+}
+
+
+.nav-sidebar {
+  margin-top: 10px;
+  background: #0000aa;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-tabs {
+  border: 1px solid white; 
+  flex: 1;
+  padding: 10px;
+  margin: 0px;
+}
+
+.sidebar-tabs .btn {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.sidebar-tabs .btn.active {
+  background: #ffffff !important;
+}
+
+/* -- Main // Pages */
+.grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.grid .panel {
+  flex: 1;
+  flex-basis: calc(100% * 0.5 - 20px - 1px);
+}
+
+.panel {
+  position: relative;
+  background: #0000aa;
+  color: #aaaaaa;
+  padding: 10px;
+}
+
+.panel-grey {
+  background: #555555;
+  color: #aaaaaa;
+}
+
+.panel .panel-content {
+  border: 1px solid white; 
+  padding: 10px;
+}
+
+.panel .panel-title-container {
+  color: white;
+  position: absolute;
+  top: 2px;
+  width: 100%;
+  text-align: center;
+}
+
+.panel .panel-title {
+  background: #0000aa;
+  padding: 0px 4px;
+}
+
+.panel-grey .panel-title {
+  background: #555555;
+}
+
+
+/* -- Slider */
+.slider.slider-v {
+    width: 60px;
+    height: 250px;
+
+}
+
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.page-lights {
+  margin: 0px;
+}
+
+.light-ctrl {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  text-align: center;
+}
+
+.light-title,
+.light-value {
+  flex: 0;
+  padding: 10px;
+}
+
+.light-title {
+  color: #ffffff;
+}
+
+.panel-input-sources {
+  padding: 20px;
+}
+
+.panel-input-sources button {
+  display: block;
+  width: 100%;
+
+  margin-bottom: 20px;
+}
+
+.audio-source-h .panel-input-sources {
+  margin: 0px;
+  margin-bottom: -8px;
+  padding: 10px;
+  background: #0000aa;
+}
+
+.audio-source-h .panel-input-sources button {
+    margin-bottom: 20px;
+}
+
+
+.volume-ctrl {
+    text-align: center;
+}
+
+.volume-input .slider {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hdmi-channel-input {
+    padding-top: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.hdmi-channel-input .btn-channel {
+    position: relative;
+}
+
+.hdmi-auto-select-toggle {
+    padding: 0px 10px 10px 10px;
+}
+
+.hdmi-connection-indicator {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.hdmi-channel-input .col-md-12 {
+    margin-bottom: 20px;
+}
+
+.box-ctrl button {
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+
+    display: block;
+}
+
+.controls-row {
+	padding: 10px;
+	margin-bottom: -15px;
+}
+
+.controls-row .controls-ctrl {
+    display: flex;
+    margin-bottom: 20px;
+    flex: 1;
+    flex-direction: column;
+}
+
+.controls-row .controls-ctrl button {
+    flex: 1;
+}
+
+.beamer-source-select {
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.beamer-button {
+    margin-bottom: 20px;
+}
+
+.page-mainhall .audio-selector {
+	width: 100%;
+}
+
+@media (min-width: 992px) {
+    .app-left {
+      height: calc(100% - 10px);
+    }
+}
+
+
+/*
+ Soundboar
+ */
+.btn-sampler-group-select {
+    margin-right: 10px;
+}
+
+
+.btn-sampler-sample {
+    margin-right: 15px;
+    margin-bottom: 15px;
+
+    padding-left: 52px;
+    padding-right: 52px;
+}
+
+.btn-disabled {
+    background: grey;
+}
+
+.btn-sampler-sample .spinner {
+  position: absolute;
+  margin-left: -45px;
+}
+
+.btn-sampler-sample .scroller-right {
+  margin-left: 5px;
+}
+
