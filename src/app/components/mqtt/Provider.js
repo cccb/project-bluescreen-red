@@ -1,8 +1,7 @@
 
 import mqtt from 'mqtt'
 
-import { useState
-       , useContext
+import { useContext
        , createContext
        , useEffect
        , useRef
@@ -23,7 +22,7 @@ export const useMqttHandler = (fn, deps) => {
     return () => {
       unsub(ref);
     };
-  }, [...deps]);
+  }, [fn, sub, unsub, ...deps]);
 };
 
 
@@ -50,7 +49,7 @@ const MqttProvider = ({children}) => {
     // Unsubscribe
     (fn) => {
       subscriptions.current = subscriptions.current.filter(
-        (sub) => sub != fn);
+        (sub) => sub !== fn);
     },
   ]);
 

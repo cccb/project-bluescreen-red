@@ -2,6 +2,8 @@
 import { Outlet }
   from 'react-router-dom';
 
+import Sidebar
+  from 'app/components/navigation/Sidebar';
 
 /**
  * TitleBar is the upper bar on the screen
@@ -40,7 +42,7 @@ const Footer = () => {
 /**
  * Page provides the main application layout
  */
-const Page = () => {
+const Page = ({children}) => {
   return (
     <div className="app">
       <TitleBar />
@@ -49,7 +51,7 @@ const Page = () => {
           <Sidebar />
         </div>
         <div className="app-content col-md-10">
-          <Outlet />
+          {children}
         </div>
       </div>
       <Footer />

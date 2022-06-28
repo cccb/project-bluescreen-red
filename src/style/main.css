@@ -309,3 +309,12 @@
   margin-left: 5px;
 }
 
+.hero {
+  font-size: 60px;
+  padding: 25% 0px;
+  text-align: center;
+}
+
+.hero.error {
+  
+}
