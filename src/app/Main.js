@@ -5,6 +5,13 @@
  * @author Annika <annika@berlin.ccc.de>
  */
 
+import { BrowserRouter
+       , Routes
+       , Route
+       }
+  from 'react-router-dom';
+
+
 
 import ConfigProvider
   from 'app/components/config/Provider';
