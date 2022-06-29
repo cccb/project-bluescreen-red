@@ -1,7 +1,4 @@
 
-import { Outlet }
-  from 'react-router-dom';
-
 import Sidebar
   from 'app/components/navigation/Sidebar';
 
