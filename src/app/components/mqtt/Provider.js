@@ -2,6 +2,7 @@
 import mqtt from 'mqtt'
 
 import { useContext
+       , useReducer
        , createContext
        , useEffect
        , useRef
@@ -15,16 +16,29 @@ const MqttContext = createContext();
 
 export const useMqtt = () => useContext(MqttContext).current;
 
-export const useMqttHandler = (fn, deps) => {
-  const [, sub, unsub] = useMqtt();
+export const useMqttReducer = (reducer, initialState) => {
+  const [pub, sub, unsub] = useMqtt();
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   useEffect(() => {
-    const ref = sub(fn);
+    const onMsg = (topic, msg) => {
+      try {
+        const payload = JSON.parse(msg);
+      } catch (err) {
+        return; // discard non json MQTT msg
+      }
+      dispatch({
+        type: topic,
+        payload: JSON.parse(msg),
+      })
+    };
+    const ref = sub(onMsg);
     return () => {
       unsub(ref);
     };
-  }, [fn, sub, unsub, ...deps]);
+  }, [dispatch, sub, unsub]);
+  return [state, pub];
 };
-
 
 /**
  * MqttProvider connects to the mqtt server
@@ -35,11 +49,10 @@ const MqttProvider = ({children}) => {
   const config = useConfig();
   const subscriptions = useRef([]);
 
-  const msgBuf = useRef([]);
   const pubsub = useRef([
     // Publish
     (topic, msg) => {
-      msgBuf.current.append([topic, msg]);
+      console.error("DEVNULL PUBLISH", topic, msg); // should never happen
     },
     // Subscribe
     (fn) => {
@@ -58,27 +71,20 @@ const MqttProvider = ({children}) => {
     if (!uri) { return }
 
     const client = mqtt.connect(uri);
+    pubsub.current[0] = client.publish; // Set publish function
     
     // Register callbacks
     client.on("connect", () => {
       client.subscribe("#");
-
-      // Update publish function
-      pubsub.current[0] = (topic, msg) => {
-        client.publish(topic, msg);
-      }
-
-      // Publish everything from the buffer
-      for (const update of msgBuf.current) {
-        client.publish(update[0], update[1]);
-      }
-      msgBuf.current = [];
     });
 
     client.on("message", (topic, msg) => {
-      console.log(subscriptions.current);
       subscriptions.current.map((sub) => sub(topic, msg));
     });
+
+    return () => {
+      client.end();
+    };
   }, [config]);
   
   return (

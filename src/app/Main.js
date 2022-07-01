@@ -20,10 +20,10 @@ import MqttProvider
 import Page
   from 'app/components/page/Page';
 
-import PageMainHall
-  from 'app/pages/main-hall/Page';
-import PageNotFound
-  from 'app/pages/not-found/Page';
+import MainHallPage 
+  from 'app/pages/main-hall/MainHallPage';
+import NotFoundPage 
+  from 'app/pages/not-found/NotFoundPage';
 
 /**
  * Application Main Component
@@ -35,8 +35,8 @@ const Main = () => {
     <BrowserRouter>
       <Page>
         <Routes>
-          <Route index    element={<PageMainHall />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route index    element={<MainHallPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Page>
     </BrowserRouter>
