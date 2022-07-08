@@ -17,8 +17,20 @@ const MqttContext = createContext();
 export const useMqtt = () => useContext(MqttContext).current;
 
 export const useMqttReducer = (reducer, initialState) => {
+  // Wrap reducer, because it needs to handle unverifed input.
+  // Causing the app to crash because of a malformed MQTT message
+  // would be unfortunate.
+  const safeReducer = (state, action) => {
+    try {
+      return reducer(state, action);
+    } catch (err) {
+      console.warn("reducer error", err, action);
+      return state;
+    }
+  }
+
   const [pub, sub, unsub] = useMqtt();
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(safeReducer, initialState);
 
   useEffect(() => {
     const onMsg = (topic, msg) => {
