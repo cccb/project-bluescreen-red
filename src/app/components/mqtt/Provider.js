@@ -14,7 +14,7 @@ import { useConfig }
 
 const MqttContext = createContext();
 
-export const useMqtt = () => useContext(MqttContext).current;
+export const useMqtt = () => useContext(MqttContext);
 
 export const useMqttReducer = (reducer, initialState) => {
   // Wrap reducer, because it needs to handle unverifed input.
@@ -29,27 +29,30 @@ export const useMqttReducer = (reducer, initialState) => {
     }
   }
 
-  const [pub, sub, unsub] = useMqtt();
+  const conn = useMqtt();
   const [state, dispatch] = useReducer(safeReducer, initialState);
 
   useEffect(() => {
+    const [, sub, unsub] = conn.current;
     const onMsg = (topic, msg) => {
+      let payload = null;
       try {
-        const payload = JSON.parse(msg);
+        payload = JSON.parse(msg);
       } catch (err) {
         return; // discard non json MQTT msg
       }
       dispatch({
         type: topic,
-        payload: JSON.parse(msg),
+        payload: payload,
       })
     };
     const ref = sub(onMsg);
     return () => {
       unsub(ref);
     };
-  }, [dispatch, sub, unsub]);
-  return [state, pub];
+  }, [conn]);
+
+  return [state, conn.current[0]];
 };
 
 /**
@@ -60,11 +63,17 @@ export const useMqttReducer = (reducer, initialState) => {
 const MqttProvider = ({children}) => {
   const config = useConfig();
   const subscriptions = useRef([]);
+  const client = useRef();
+  const msgBuf = useRef([]);
 
   const pubsub = useRef([
     // Publish
     (topic, msg) => {
-      console.error("DEVNULL PUBLISH", topic, msg); // should never happen
+      if (client.current) {
+        client.current.publish(topic, msg);
+      } else { 
+        msgBuf.current.push([topic, msg]);
+      }
     },
     // Subscribe
     (fn) => {
@@ -82,20 +91,24 @@ const MqttProvider = ({children}) => {
     const uri = config.mqtt?.uri;
     if (!uri) { return }
 
-    const client = mqtt.connect(uri);
-    pubsub.current[0] = client.publish; // Set publish function
+    client.current = mqtt.connect(uri);
     
     // Register callbacks
-    client.on("connect", () => {
-      client.subscribe("#");
+    client.current.on("connect", () => {
+      client.current.subscribe("#");
+      // Flush buffer
+      for (const [msg, topic] of msgBuf.current) {
+        client.current.publish(msg, topic);
+      }
+      msgBuf.current = [];
     });
 
-    client.on("message", (topic, msg) => {
+    client.current.on("message", (topic, msg) => {
       subscriptions.current.map((sub) => sub(topic, msg));
     });
 
     return () => {
-      client.end();
+      client.current.end();
     };
   }, [config]);
   

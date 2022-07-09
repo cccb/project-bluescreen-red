@@ -26,7 +26,7 @@ import PowerStats
  */
 const AudioPanel = () => {
   // Fake state
-  const masterVolumeMute = false;
+  const masterVolumeMute = true;
   const masterVolumeLevel = 42.0;
   const onMasterVolumeChanged = (value) => {
     console.log(value);
@@ -41,13 +41,13 @@ const AudioPanel = () => {
           <VolumeControl
             title="Master Volume"
             level={masterVolumeLevel}
-            onchange={onMasterVolumeChanged} />
+            onChange={onMasterVolumeChanged} />
 
           <div className="box-ctrl">
             <Toggle onToggle={onMasterVolumeMuteToggle}
-                    active={masterVolumeMute}>
-                Mute
-            </Toggle>
+                    value={masterVolumeMute}
+                    activeLabel="Unmute"
+                    inactiveLabel="Mute" />
         </div>
 
         <div className="col-xs-8">
@@ -91,7 +91,7 @@ const MainHallPage = () => {
       <div className="content">
 
         <div className="col-md-8">
-          audio panel
+          <AudioPanel />
         </div>
 
         <div className="col-md-4">

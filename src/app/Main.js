@@ -16,6 +16,8 @@ import ConfigProvider
   from 'app/components/config/Provider';
 import MqttProvider
   from 'app/components/mqtt/Provider';
+import TasmotaProvider
+  from 'app/components/tasmota/Provider';
 
 import Page
   from 'app/components/page/Page';
@@ -32,6 +34,7 @@ const Main = () => {
   return (
     <ConfigProvider>
     <MqttProvider>
+    <TasmotaProvider>
     <BrowserRouter>
       <Page>
         <Routes>
@@ -40,6 +43,7 @@ const Main = () => {
         </Routes>
       </Page>
     </BrowserRouter>
+    </TasmotaProvider>
     </MqttProvider>
     </ConfigProvider>
   );

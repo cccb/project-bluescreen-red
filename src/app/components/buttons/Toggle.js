@@ -1,33 +1,46 @@
 
+import { useCallback }
+  from 'react';
 
-
-const indicatorClass = (state) => {
-  if (state == "ON") {
-    return "btn-success";
-  }
-  return "btn-primary";
-}
 
 /**
- * Toggle button based on state
+ * Toggle is a button rendering two different
+ * states: active and inactive, on click the
+ * onToggle callback will be invoked.
  */
 const Toggle = ({
-  deviceId, labelOn, labelOff, onClick,
+  onToggle,
+  value,
+  activeLabel,
+  inactiveLabel=activeLabel,
+  activeClass="btn-warning",
+  inactiveClass="btn-success",
+  className="",
 }) => {
-  const state = "OFF"; // shim
-  const btnClass = "btn btn-lg " + indicatorClass(state);
-  const label = state === "ON" ? labelOn : labelOff;
+  const onClick = useCallback(() => {
+    if (value) {
+      onToggle(false);
+    } else {
+      onToggle(true);
+    }
+  }, [onToggle, value]);
 
-  const togglePower = () => {
-    console.log("toggle power", deviceId);
-  };
+  let btnClass = `btn btn-lg ${className}`;
+  let label = inactiveLabel;
+
+  if (value) {
+    label = activeLabel;
+    btnClass += " " + activeClass;
+  } else {
+    btnClass += " " + inactiveClass;
+  }
 
   return (
     <button className={btnClass}
-            onClick={() => togglePower()}>
-       {label}
+            onClick={onClick}>
+      {label}
     </button>
   );
-};
+}
 
 export default Toggle;
