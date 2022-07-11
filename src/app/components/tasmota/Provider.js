@@ -137,9 +137,8 @@ export const useTasmotaSwitch = (deviceId) => {
     };
     const ref = sub(onMsg);
 
-    // Dispatch request
-    const [topic, msg] = tasmotaCommand(prefix, deviceId, "power");
-    pub(topic, msg);
+    // Dispatch state request
+    pub(...tasmotaCommand(prefix, deviceId, "power"));
 
     return () => {
       unsub(ref);
@@ -150,12 +149,10 @@ export const useTasmotaSwitch = (deviceId) => {
     const [pub] = conn.current;
     if (state === "on") {
       // Dispatch mqtt tasmota power off
-      const [topic, msg] = tasmotaCommand(prefix, deviceId, "power", "off");
-      pub(topic, msg);
+      pub(...tasmotaCommand(prefix, deviceId, "power", "off"));
     } else {
       // Dispatch mqtt tasmota power on 
-      const [topic, msg] = tasmotaCommand(prefix, deviceId, "power", "on");
-      pub(topic, msg);
+      pub(...tasmotaCommand(prefix, deviceId, "power", "on"));
     }
   }, [prefix, deviceId, state, conn]);
   
@@ -189,7 +186,5 @@ const TasmotaProvider = ({children}) => {
     </TasmotaContext.Provider>
   );
 };
-
-
 
 export default TasmotaProvider;

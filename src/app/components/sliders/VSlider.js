@@ -110,6 +110,12 @@ const VSlider = ({value, onChange, min=0, max=100}) => {
       canvas.current.dispatchEvent(mouseEvent);
     });
 
+    // Prevent context menu
+    canvas.current.oncontextmenu = (e) => {
+      e.preventDefault();
+      return false;
+    };
+
   }, [canvas, onMouseDown, onMouseMove]);
 
 

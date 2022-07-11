@@ -32,6 +32,8 @@ export const useMqttReducer = (reducer, initialState) => {
   const conn = useMqtt();
   const [state, dispatch] = useReducer(safeReducer, initialState);
 
+  const publish = (topic, msg) => conn.current[0](topic, msg);
+
   useEffect(() => {
     const [, sub, unsub] = conn.current;
     const onMsg = (topic, msg) => {
@@ -52,8 +54,9 @@ export const useMqttReducer = (reducer, initialState) => {
     };
   }, [conn]);
 
-  return [state, conn.current[0]];
+  return [state, publish];
 };
+
 
 /**
  * MqttProvider connects to the mqtt server

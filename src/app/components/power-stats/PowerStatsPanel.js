@@ -80,7 +80,7 @@ const reducer = (state, action) => {
  * PowerStats shows statistics about the current
  * power consumption
  */
-const PowerStats = () => {
+const PowerStatsPanel = () => {
   const [{power, current}] = useMqttReducer(reducer, initialState);
 
   return (
@@ -114,5 +114,5 @@ const PowerStats = () => {
   );
 }
 
-export default PowerStats;
+export default PowerStatsPanel;
 
