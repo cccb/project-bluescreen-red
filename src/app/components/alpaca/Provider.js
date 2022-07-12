@@ -1,10 +1,11 @@
 
+import { useCallback }
+  from 'react';
+
 import { useMqtt
        , useMqttReducer
        }
   from 'app/components/mqtt/Provider';
-
-
 
 /**
  * The alpaca reducer is an extension to the mqttReducer
@@ -12,13 +13,11 @@ import { useMqtt
  */
 export const useAlpacaReducer = (reducer, initialState) => {
   const [state, publish] = useMqttReducer(reducer, initialState);
-  
-  const dispatch = (action) => {
+  const dispatch = useCallback((action) => {
     const topic = action.type;
     const payload = JSON.stringify(action.payload);
     return publish(topic, payload);
-  }
-
+  }, [publish]);
   return [state, dispatch]
 }
 

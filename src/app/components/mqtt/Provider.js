@@ -6,6 +6,7 @@ import { useContext
        , createContext
        , useEffect
        , useRef
+       , useCallback
        }
   from 'react';
 
@@ -32,7 +33,9 @@ export const useMqttReducer = (reducer, initialState) => {
   const conn = useMqtt();
   const [state, dispatch] = useReducer(safeReducer, initialState);
 
-  const publish = (topic, msg) => conn.current[0](topic, msg);
+  const publish = useCallback(
+    (topic, msg) => conn.current[0](topic, msg),
+    [conn]);
 
   useEffect(() => {
     const [, sub, unsub] = conn.current;

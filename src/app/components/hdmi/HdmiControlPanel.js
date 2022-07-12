@@ -9,9 +9,9 @@ import HdmiAudioModeStatus
   from 'app/components/hdmi/HdmiAudioModeStatus';
 
 /**
- * VideoPanel controls the HDMI matrix in the main hall
+ * HdmiControlPanel controls the HDMI matrix in the main hall
  */
-const VideoPanel = () => {
+const HdmiControlPanel = () => {
   return (
     <Panel title="Video">
       <div className="beamer-source-select row">
@@ -29,4 +29,4 @@ const VideoPanel = () => {
   );
 };
 
-export default VideoPanel;
+export default HdmiControlPanel;

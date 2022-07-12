@@ -19,13 +19,13 @@ import MqttProvider
 import TasmotaProvider
   from 'app/components/tasmota/Provider';
 
-import Page
-  from 'app/components/page/Page';
+import Layout 
+  from 'app/components/page/Layout';
 
 import MainHallPage 
-  from 'app/pages/main-hall/MainHallPage';
+  from 'app/pages/MainHallPage';
 import NotFoundPage 
-  from 'app/pages/not-found/NotFoundPage';
+  from 'app/pages/NotFoundPage';
 
 /**
  * Application Main Component
@@ -36,12 +36,12 @@ const Main = () => {
     <MqttProvider>
     <TasmotaProvider>
     <BrowserRouter>
-      <Page>
+      <Layout>
         <Routes>
           <Route index    element={<MainHallPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </Page>
+      </Layout>
     </BrowserRouter>
     </TasmotaProvider>
     </MqttProvider>

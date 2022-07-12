@@ -3,10 +3,10 @@ import LightPresetsPanel
   from 'app/components/light/LightPresetsPanel';
 import PowerStatsPanel
   from 'app/components/power-stats/PowerStatsPanel';
-import AudioMasterPanel
-  from 'app/components/audio/AudioMasterPanel';
-import HdmiMasterPanel 
-  from 'app/components/hdmi/HdmiMasterPanel';
+import AudioControlPanel
+  from 'app/components/audio/AudioControlPanel';
+import HdmiControlPanel 
+  from 'app/components/hdmi/HdmiControlPanel';
 
 
 /**
@@ -18,10 +18,10 @@ const MainHallPage = () => {
     <div className="page page-mainhall">
       <div className="content">
         <div className="col-md-8">
-          <AudioMasterPanel />
+          <AudioControlPanel />
         </div>
         <div className="col-md-4">
-          <HdmiMasterPanel />
+          <HdmiControlPanel />
         </div>
         <div className="col-md-8">
           <LightPresetsPanel title="Light Presets" />

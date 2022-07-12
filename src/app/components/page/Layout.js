@@ -37,9 +37,9 @@ const Footer = () => {
 }
 
 /**
- * Page provides the main application layout
+ * Layout provides the main application layout
  */
-const Page = ({children}) => {
+const Layout = ({children}) => {
   return (
     <div className="app">
       <TitleBar />
@@ -56,4 +56,4 @@ const Page = ({children}) => {
   );
 }
 
-export default Page;
+export default Layout;

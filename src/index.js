@@ -5,7 +5,6 @@ import './style/main.css';
 import 'polyfill/buffer';
 import 'polyfill/process';
 
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import Main           from './app/Main';
@@ -13,5 +12,5 @@ import Main           from './app/Main';
 const root = createRoot(document.getElementById('app'));
 
 root.render(
-  <StrictMode><Main /></StrictMode>
+  <Main />
 );
