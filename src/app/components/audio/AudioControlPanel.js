@@ -8,10 +8,8 @@ import Panel
   from 'app/components/panel/Panel';
 import PowerToggle 
   from 'app/components/tasmota/PowerToggle';
-import VolumeControl
-  from 'app/components/audio/VolumeControl';
-import AudioToggle
-  from 'app/components/audio/AudioToggle';
+import AudioChannelControl 
+  from 'app/components/audio/AudioChannelControl';
 import AudioSourceSelect
   from 'app/components/audio/AudioSourceSelect'; 
 
@@ -23,16 +21,9 @@ const AudioControlPanel = () => {
     <Panel title="Audio">
       <div className="row">
         <div className="col-xs-4 box-centered">
-          <VolumeControl
+          <AudioChannelControl title="Master Volume"
             channel={MAIN_MASTER_LEVEL}
-            title="Master Volume" />
-
-          <div className="box-ctrl">
-            <AudioToggle 
-              toggle={MAIN_MUTE_MASTER_TOGGLE}
-              activeLabel="Unmute"
-              inactiveLabel="Mute" />
-          </div>
+            mute={MAIN_MUTE_MASTER_TOGGLE} />
         </div>
 
         <div className="col-xs-8">

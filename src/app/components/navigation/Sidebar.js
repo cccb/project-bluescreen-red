@@ -29,7 +29,9 @@ const Sidebar = () => {
             <div className="btn-inner">Audio</div>
           </NavLink>
         </div>
-
+    
+        {/* Disabled components */}
+        {/*
         <div className="col-xs-6 col-md-12">
           <NavLink to="/klang3" className="btn btn-lg btn-info">
             <div className="btn-inner">Klang3</div>
@@ -42,6 +44,7 @@ const Sidebar = () => {
           </NavLink>
         </div>
 
+        */}
         <div className="col-xs-6 col-md-12">
           <NavLink to="/treppe" className="btn btn-lg btn-info">
             <div className="btn-inner">Stairs</div>

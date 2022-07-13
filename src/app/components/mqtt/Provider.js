@@ -75,7 +75,6 @@ const MqttProvider = ({children}) => {
   const pubsub = useRef([
     // Publish
     (topic, msg) => {
-      console.log("MQTT TX:", topic, msg);
       if (client.current) {
         client.current.publish(topic, msg);
       } else { 

@@ -1,4 +1,7 @@
 
+import Panel
+  from 'app/components/panel/Panel';
+
 import LightPresetsPanel
   from 'app/components/light/LightPresetsPanel';
 import PowerStatsPanel
@@ -7,6 +10,9 @@ import AudioControlPanel
   from 'app/components/audio/AudioControlPanel';
 import HdmiControlPanel 
   from 'app/components/hdmi/HdmiControlPanel';
+
+import StairsPowerToggle
+  from 'app/components/stairs/StairsPowerToggle';
 
 
 /**
@@ -22,6 +28,11 @@ const MainHallPage = () => {
         </div>
         <div className="col-md-4">
           <HdmiControlPanel />
+        </div>
+        <div className="col-md-4">
+          <Panel title="Stairs">
+            <StairsPowerToggle />
+          </Panel>
         </div>
         <div className="col-md-8">
           <LightPresetsPanel title="Light Presets" />

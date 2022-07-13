@@ -24,8 +24,12 @@ import Layout
 
 import MainHallPage 
   from 'app/pages/MainHallPage';
+import MainAudioPage
+  from 'app/pages/MainAudioPage';
 import LightPage
   from 'app/pages/LightPage';
+import StairsPage
+  from 'app/pages/StairsPage';
 import NotFoundPage 
   from 'app/pages/NotFoundPage';
 
@@ -42,8 +46,12 @@ const Main = () => {
         <Routes>
           <Route index
             element={<MainHallPage />} />
+          <Route path="/audio"
+            element={<MainAudioPage />} />
           <Route path="/lights"
             element={<LightPage />} />
+          <Route path="/treppe"
+            element={<StairsPage />} />
           <Route path="*"
             element={<NotFoundPage />} />
         </Routes>
