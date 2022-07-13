@@ -2,8 +2,7 @@
 import './style/main.css';
 
 // Polyfills for mqtt lib
-import 'polyfill/buffer';
-import 'polyfill/process';
+import './polyfill';
 
 import { createRoot } from 'react-dom/client';
 
