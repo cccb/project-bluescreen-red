@@ -24,6 +24,8 @@ import Layout
 
 import MainHallPage 
   from 'app/pages/MainHallPage';
+import LightPage
+  from 'app/pages/LightPage';
 import NotFoundPage 
   from 'app/pages/NotFoundPage';
 
@@ -38,8 +40,12 @@ const Main = () => {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route index    element={<MainHallPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route index
+            element={<MainHallPage />} />
+          <Route path="/lights"
+            element={<LightPage />} />
+          <Route path="*"
+            element={<NotFoundPage />} />
         </Routes>
       </Layout>
     </BrowserRouter>
