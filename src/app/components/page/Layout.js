@@ -9,7 +9,7 @@ const TitleBar = () => {
   return (
     <div className="nav-titlebar">
       <div className="nav-title">
-        CCCB Bluescreen Pink
+        ♥ CCCB Bluescreen Pink ♥
       </div>
       <div className="nav-version">
         0.42.3
