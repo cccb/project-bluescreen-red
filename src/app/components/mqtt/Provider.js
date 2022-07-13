@@ -75,6 +75,7 @@ const MqttProvider = ({children}) => {
   const pubsub = useRef([
     // Publish
     (topic, msg) => {
+      console.log("MQTT TX:", topic, msg);
       if (client.current) {
         client.current.publish(topic, msg);
       } else { 
@@ -110,6 +111,7 @@ const MqttProvider = ({children}) => {
     });
 
     client.current.on("message", (topic, msg) => {
+      console.log("MQTT RX:", topic, msg.toString());
       subscriptions.current.map((sub) => sub(topic, msg));
     });
 

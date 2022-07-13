@@ -248,7 +248,6 @@ export const useAudioToggle = (toggle) => {
   // Initialize by making a request to get the current state
   useEffect(() => {
     dispatch(getToggleRequest(toggle));
-    console.log("dispatch getToggleReq");
   }, [toggle, dispatch]);
 
   return [state, setState];

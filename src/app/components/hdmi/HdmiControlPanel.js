@@ -14,10 +14,10 @@ import HdmiAudioModeStatus
 const HdmiControlPanel = () => {
   return (
     <Panel title="Video">
-      <div className="beamer-source-select row">
-          <HdmiInputSelect output="presenter" />
+      <div className="projector-source-select row">
+        <HdmiInputSelect output="presenter" />
       </div>
-      <div className="beamer-status row">
+      <div className="projector-status row">
         <div className="col-md-6">
           <HdmiAutoSelectToggle />
         </div>

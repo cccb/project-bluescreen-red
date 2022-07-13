@@ -9,9 +9,12 @@ import Toggle
 const AudioToggle = ({toggle, ...props}) => {
   const [state, setState] = useAudioToggle(toggle);
   return (
-    <Toggle onToggle={setState} 
-            value={state}
-            {...props} />
+    <Toggle
+      onToggle={setState} 
+      activeClass="btn-warning"
+      inactiveClass="btn-success"
+      value={state}
+      {...props} />
   );
 }
 

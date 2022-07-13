@@ -13,8 +13,8 @@ const Toggle = ({
   value,
   activeLabel,
   inactiveLabel=activeLabel,
-  activeClass="btn-warning",
-  inactiveClass="btn-success",
+  inactiveClass="btn-warning",
+  activeClass="btn-success",
   className="",
 }) => {
   const onClick = useCallback(() => {

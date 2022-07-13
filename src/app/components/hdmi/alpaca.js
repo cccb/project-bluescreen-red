@@ -148,7 +148,7 @@ const audioModeReducer = (state, {type, payload}) => {
       };
     default:
   }
-  return state:
+  return state;
 }
 
 /**
@@ -210,7 +210,6 @@ const autoSelectReducer = (state, {type, payload}) => {
     case GET_AUTO_SELECT_SUCCESS:
     case SET_AUTO_SELECT_SUCCESS:
       return payload.enabled;
-    }
     default:
   }
   return state;
@@ -220,14 +219,14 @@ const autoSelectReducer = (state, {type, payload}) => {
  * HDMI AutoSelect
  */
 export const useHdmiAutoSelect = () => {
-  const [enabled, dispatch] = useAlpacaReducer(inputReducer, false);
+  const [enabled, dispatch] = useAlpacaReducer(autoSelectReducer, false);
   const setEnabled = useCallback((enabled) => {
     dispatch(setAutoSelectRequest(enabled)); 
   }, [dispatch]);
   useEffect(() => {
     dispatch(getAutoSelectRequest());
   }, [dispatch]);
-  return [state, setEnabled];
+  return [enabled, setEnabled];
 }
 
 
