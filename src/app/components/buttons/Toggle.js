@@ -15,7 +15,8 @@ const Toggle = ({
   inactiveLabel=activeLabel,
   inactiveClass="btn-warning",
   activeClass="btn-success",
-  className="",
+  className="btn-lg",
+  ...props
 }) => {
   const onClick = useCallback(() => {
     if (value) {
@@ -25,7 +26,7 @@ const Toggle = ({
     }
   }, [onToggle, value]);
 
-  let btnClass = `btn btn-lg ${className}`;
+  let btnClass = `btn ${className}`;
   let label = inactiveLabel;
 
   if (value) {
@@ -37,7 +38,8 @@ const Toggle = ({
 
   return (
     <button className={btnClass}
-            onClick={onClick}>
+            onClick={onClick}
+            {...props}>
       {label}
     </button>
   );

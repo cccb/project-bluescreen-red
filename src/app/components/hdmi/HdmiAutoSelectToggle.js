@@ -11,10 +11,25 @@ import Toggle
  */
 const HdmiAutoSelectToggle = () => {
   const [enabled, setEnabled] = useHdmiAutoSelect();
+
+  const labelEnabled = (
+    <span>
+      AutoSelect<br/> ENABLED
+    </span>
+  );
+
+  const labelDisabled = (
+    <span> 
+      AutoSelect<br/> DISABLED 
+    </span>
+  );
+
   return (
     <Toggle
-      activeLabel="AutoSelect ENABLED"
-      inactiveLabel="AutoSelect DISABLED"
+      style={{marginLeft: "10px"}}
+      className="btn-small"
+      activeLabel={labelEnabled}
+      inactiveLabel={labelDisabled}
       onToggle={(v) => setEnabled(v)}
       value={enabled} />
   );

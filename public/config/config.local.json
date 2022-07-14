@@ -1,8 +1,15 @@
 {
     "mqtt": {
-        "uri": "ws://localhost:9001",
+        "uri": "ws://localhost:8023/",
         "user": null,
         "password": null
+    },
+    "tasmota": {
+        "prefix": "v2/tasmota",
+        "devices": [
+            { "id": "LED-Keller", "type": "switch" },
+            { "id": "power-music", "type": "switch" }
+        ]
     }
 }
 

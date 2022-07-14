@@ -6,7 +6,7 @@ import Panel
 
 
 // Actions
-const REALTIMEPOWER_UPDATE = "@stat/powermeter/REALTIMEPOWER_UPDATE";
+const REALTIMEPOWER_UPDATE = "stat/powermeter/realtimepower";
 
 // State
 const initialState = {

@@ -12,7 +12,7 @@ const StairsPowerToggle = () => {
     <Toggle
       value={state}
       onToggle={(s) => setState(s)}
-      className="btn-block"
+      className="btn-lg btn-block"
       activeLabel="Power Off"
       activeClass="btn-success"
       inactiveLabel="Power On"

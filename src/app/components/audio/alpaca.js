@@ -83,7 +83,7 @@ export const setLevelRequest = (levelId, value) => {
     type: SET_LEVEL_REQUEST,
     payload: {
       id: levelId,
-      value: remap255(value), 
+      value: Math.round(remap255(value)), 
     }
   }
 }
@@ -92,7 +92,6 @@ export const setLevelRequest = (levelId, value) => {
 export const getLevelsRequest = () => {
   return {
     type: GET_LEVELS_REQUEST,
-    payload: null,
   }
 }
 
@@ -153,7 +152,7 @@ export const setToggleRequest = (toggleId, state) => {
  * State is the current level (0..100).
  */
 const audioLevelReducer = (channel) => (state, action) => {
-  if (action.type !== GET_LEVEL_SUCCESS ||
+  if (action.type !== GET_LEVEL_SUCCESS &&
       action.type !== SET_LEVEL_SUCCESS ) {
     return state; // nothing to do here
   }
@@ -190,7 +189,7 @@ export const useAudioLevel = (channel) => {
  * channel. We always assume MAIN_SOURCE as the channel.
  */
 const audioSourceReducer = (state, {type, payload}) => {
-  if (type !== SET_SOURCE_SUCCESS ||
+  if (type !== SET_SOURCE_SUCCESS &&
       type !== GET_SOURCE_SUCCESS ) {
     return state; // Nothing to do
   }
@@ -223,7 +222,7 @@ export const useAudioSource = () => {
  * audioToggleReducer creates a reducer for the current toggle
  */
 const audioToggleReducer = (toggle) => (state, {type, payload}) => {
-  if (type !== SET_TOGGLE_SUCCESS ||
+  if (type !== SET_TOGGLE_SUCCESS &&
       type !== GET_TOGGLE_SUCCESS ) {
     return state; // nothing to do here
   }
@@ -240,7 +239,8 @@ const audioToggleReducer = (toggle) => (state, {type, payload}) => {
  * current toggle value identified by id.
  */
 export const useAudioToggle = (toggle) => {
-  const [state, dispatch] = useAlpacaReducer(audioToggleReducer, false);
+  const [state, dispatch] = useAlpacaReducer(
+    audioToggleReducer(toggle), false);
   const setState = useCallback((state) => {
     dispatch(setToggleRequest(toggle, state)); 
   }, [toggle, dispatch]);
