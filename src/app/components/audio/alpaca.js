@@ -170,7 +170,7 @@ const audioLevelReducer = (channel) => (state, action) => {
  * the current audio level of a channel
  */
 export const useAudioLevel = (channel) => {
-  const [level, dispatch] = useAlpacaReducer(audioLevelReducer(channel), 0);
+  const [level, dispatch] = useAlpacaReducer(audioLevelReducer(channel));
   const setLevel = useCallback((level) => {
     dispatch(setLevelRequest(channel, level));
   }, [channel, dispatch]);

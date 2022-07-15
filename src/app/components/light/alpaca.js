@@ -54,7 +54,7 @@ const daliLightLevelsReducer = (state, {type, payload}) => {
       // Decode light levels and return as new state.
       // Levels are mapped to 0..100
       let levels = {};
-      for (const light in payload) {
+      for (const light of payload) {
         levels[light.id] = (light.value / 255.0) * 100.0;
       }
       return levels;

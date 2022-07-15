@@ -55,69 +55,110 @@ const valueToOffset = (min, max, v, yMax) => {
 /**
  * VSlider renders a vertical slider using a canvas.
  */
-const VSlider = ({value, onChange, min=0, max=100}) => {
+const VSlider = ({
+  value,
+  onChange,
+  onInteract,
+  min=0,
+  max=100,
+}) => {
   const container = useRef();
   const canvas    = useRef();
 
-  // Event handlers
+  // Event handlers:
+  // MouseDown
   const onMouseDown = useCallback((e) => {
     const nextValue = offsetToValue(
       min, max, e.offsetY, canvas.current.height);
-    if(onChange) {
-      onChange(nextValue);
+    if(onInteract) {
+      onInteract(true);
     }
-  }, [onChange, min, max, canvas]);
+    if(onChange) {
+      return onChange(nextValue);
+    }
+  }, [onChange, onInteract, min, max, canvas]);
 
+  // MouseMove
   const onMouseMove = useCallback((e) => {
     if (!e.buttons) {
       return;
     }
     const nextValue = offsetToValue(
       min, max, e.offsetY, canvas.current.height);
-    if(onChange && Math.abs(nextValue - value) > 1.0) {
-      onChange(nextValue);
+    if(onChange) {
+      return onChange(nextValue);
     }
-  }, [onChange, min, max, canvas, value]);
+  }, [onChange, min, max, canvas]);
 
+  // MouseUp
+  const onMouseUp = useCallback((e) => {
+    if (onInteract) {
+      return onInteract(false);
+    }
+  }, [onInteract]);
+
+  // TouchStart
+  const onTouchStart = useCallback((e) => {
+    const [touch] = e.touches;
+    const mouseEvent = new MouseEvent("mousedown", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.current.dispatchEvent(mouseEvent);
+  }, [canvas]);
+
+  // TouchMove
+  const onTouchMove = useCallback((e) => {
+    const [touch] = e.touches;
+    const mouseEvent = new MouseEvent("mousemove", {
+      buttons: 1,
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.current.dispatchEvent(mouseEvent);
+  }, [canvas]);
+
+  // TouchEnd
+  const onTouchEnd = useCallback((e) => {
+    const mouseEvent = new MouseEvent("mouseup", {});
+    canvas.current.dispatchEvent(mouseEvent);
+  }, [canvas]);
+
+  const onContextMenu = useCallback((e) => {
+    e.preventDefault();
+    return false;
+  }, []);
+
+
+  // Resize canvas to parent size
   useEffect(() => {
-    // Resize canvas to parent size
     canvas.current.width = container.current.clientWidth;
     canvas.current.height = container.current.clientHeight;
   }, [canvas, container]);
 
+  // Bind Events
   useEffect(() => {
-    // Bind Events
     canvas.current.addEventListener("mousedown", onMouseDown);
     canvas.current.addEventListener("mousemove", onMouseMove);
+    canvas.current.addEventListener("mouseup",   onMouseUp);
 
     // Touch compatibility
-    canvas.current.addEventListener("touchmove", (e) => {
-      const [touch] = e.touches;
-      const mouseEvent = new MouseEvent("mousemove", {
-        buttons: 1,
-        clientX: touch.clientX,
-        clientY: touch.clientY
-      });
-      canvas.current.dispatchEvent(mouseEvent);
-     }, false);
-
-    canvas.current.addEventListener("touchstart", (e) => {
-      const [touch] = e.touches;
-      const mouseEvent = new MouseEvent("mousedown", {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-      });
-      canvas.current.dispatchEvent(mouseEvent);
-    });
+    canvas.current.addEventListener("touchmove",  onTouchMove);
+    canvas.current.addEventListener("touchstart", onTouchStart);
+    canvas.current.addEventListener("touchend",   onTouchEnd);
 
     // Prevent context menu
-    canvas.current.oncontextmenu = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-  }, [canvas, onMouseDown, onMouseMove]);
-
+    canvas.current.oncontextmenu = onContextMenu;
+  }, [
+    canvas,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    onContextMenu,
+  ]);
 
   // Draw slider on canvas
   useEffect(() => {

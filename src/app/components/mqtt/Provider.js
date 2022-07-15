@@ -110,7 +110,7 @@ const MqttProvider = ({children}) => {
     });
 
     client.current.on("message", (topic, msg) => {
-      console.log("MQTT RX:", topic, msg.toString());
+      // console.log("MQTT RX:", topic, msg.toString());
       subscriptions.current.map((sub) => sub(topic, msg));
     });
 

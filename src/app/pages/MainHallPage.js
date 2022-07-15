@@ -44,4 +44,5 @@ const MainHallPage = () => {
     </div>
   );
 }
+
 export default MainHallPage;
