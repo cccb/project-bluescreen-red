@@ -1,5 +1,5 @@
 
-import { useState, useEffect }
+import { useState, useEffect, useCallback }
   from 'react'
 
 import { useAudioLevel }
@@ -12,28 +12,39 @@ import VSlider
 
 const VolumeControl = ({title, channel}) => {
   const [level, setLevel] = useAudioLevel(channel);
-  const [volume, setVolume] = useState(0);
   const [active, setActive] = useState(false);
+  const [volume, setVolume] = useState();
   
-  // TODO: Maybe generalize
+  const importState = useCallback((level) => {
+    if (active || level === undefined) {
+      return;
+    }
+    setVolume(level);
+  }, [active, setVolume]);
+
+  const exportState = useCallback((level) => {
+    if (!active || level === undefined) {
+      return;
+    }
+    setLevel(level);
+  }, [active, setLevel]);
+
   // Dispatch rate limited setLevel
   useEffect(() => {
     const tref = setTimeout(() => {
-      setLevel(volume);
+      exportState(volume);
     }, 10);
     return () => {
       clearTimeout(tref);
     }
-  }, [volume, setLevel]);
+  }, [volume, exportState]);
 
   // Update from global state on idle
   useEffect(() => {
-    if (!active && level !== undefined) {
-      setVolume(level);
-    }
-  }, [active, level, setVolume]);
+    importState(level);
+  }, [level, importState]);
 
-
+  const volumeVal = volume || 0;
   return (
     <div className="volume-ctrl box-centered-content">
       <div className="volume-title">
@@ -45,7 +56,7 @@ const VolumeControl = ({title, channel}) => {
                  onChange={setVolume} />
       </div>
       <div className="volume-value">
-        {volume.toFixed(1)}%
+        {volumeVal.toFixed(1)}%
       </div>
     </div>
   );

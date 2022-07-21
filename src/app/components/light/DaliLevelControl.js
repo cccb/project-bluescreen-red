@@ -12,32 +12,32 @@ const DaliLevelControl = ({channel, title}) => {
   const [daliLevels, setDaliLevel] = useDaliLightLevels();
   const daliLevel = daliLevels[channel];
 
-  const [level, setLevel] = useState(0);
+  const [level, setLevel] = useState();
   const [active, setActive] = useState(false);
 
-  const setChannelLevel = useCallback(
-    (v) => setDaliLevel(channel, v),
-    [channel, setDaliLevel]
-  );
-
-  // Dispatch rate limited dali level update
-  useEffect(() => {
-    const tref = setTimeout(() => {
-      setChannelLevel(level);
-    }, 10);
-    return () => {
-      clearTimeout(tref);
+  const importState = useCallback((level) => {
+    if (active || level === undefined) {
+      return;
     }
-  }, [level, setChannelLevel]);
+    setLevel(level);
+  }, [active, setLevel]);
 
-  // Update from global state on idle
-  useEffect(() => {
-    if (!active && daliLevel !== undefined) {
-      setLevel(daliLevel);
+  const exportState = useCallback((level) => {
+    if (!active || level === undefined) {
+      return;
     }
-  }, [active, daliLevel, setLevel]);
+    setDaliLevel(channel, level)
+  }, [channel, active, setDaliLevel]);
 
+  useEffect(() => {
+    importState(daliLevel);
+  }, [daliLevel, importState]);
 
+  useEffect(() => {
+    exportState(level);
+  }, [level, exportState]);
+
+  const levelVal = level || 0;
   return (
     <div className="light-ctrl">
       <div className="light-title">
@@ -49,7 +49,7 @@ const DaliLevelControl = ({channel, title}) => {
                  onInteract={setActive} />
       </div>
       <div className="light-value">
-        {level.toFixed(1)}%
+        {levelVal.toFixed(1)}%
       </div>
     </div>
   );
