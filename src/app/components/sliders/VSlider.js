@@ -7,9 +7,27 @@ import { useRef
 
 
 /*
+ * Event handling
+ */
+const createBindEvent = (ev) => (ref, handler) =>
+  useEffect(() => {
+    const target = ref.current;
+    target.addEventListener(ev, handler, { capture: true });
+    return () => {
+      target.removeEventListener(ev, handler);
+    }
+  }, [ref, handler]);
+
+const useBindMouseDown = createBindEvent("mousedown");
+const useBindMouseUp = createBindEvent("mouseup");
+const useBindMouseMove = createBindEvent("mousemove");
+const useBindTouchStart = createBindEvent("touchstart");
+const useBindTouchMove = createBindEvent("touchmove");
+const useBindTouchEnd = createBindEvent("touchend");
+
+/*
  * Slider Drawing Routines
  */
-
 const drawScale = (ctx, x, width, height, num) => {
   const dy = height / num;
   for (let i = 1; i < num; i++) {
@@ -40,6 +58,21 @@ const drawBase = (ctx, x, width, height) => {
  * Value and Offset calculation
  */
 
+
+/**
+ * Calculate offsetX and offsetY because of a bug in
+ *  mobile devices:
+ */
+const offsetFromTouchEvent = (e) => {
+  const [{clientX, clientY}] = e.touches;
+  const {x, y} = e.target.getBoundingClientRect();
+  const offset = [
+    Math.max(0, clientX - x),
+    Math.max(0, clientY - y),
+  ];
+  return offset;
+}
+
 const offsetToValue = (min, max, y, yMax) => {
   const value = Math.min(
     max, min + Math.max(0, max * (1.0 - ((y) / yMax))));
@@ -65,30 +98,43 @@ const VSlider = ({
   const container = useRef();
   const canvas    = useRef();
 
+  // Math
+  const toValue = useCallback((offset) =>
+    offsetToValue(
+      min, max,
+      offset,
+      canvas.current.height,
+    ), [min, max, canvas]);
+
+  const toOffset = useCallback((value) =>
+    valueToOffset(
+      min, max,
+      value,
+      canvas.current.height,
+    ), [min, max, canvas])
+
   // Event handlers:
   // MouseDown
   const onMouseDown = useCallback((e) => {
-    const nextValue = offsetToValue(
-      min, max, e.offsetY, canvas.current.height);
+    const v = toValue(e.offsetY);
     if(onInteract) {
       onInteract(true);
     }
     if(onChange) {
-      return onChange(nextValue);
+      return onChange(v);
     }
-  }, [onChange, onInteract, min, max, canvas]);
+  }, [onChange, onInteract, toValue]);
 
   // MouseMove
   const onMouseMove = useCallback((e) => {
     if (!e.buttons) {
       return;
     }
-    const nextValue = offsetToValue(
-      min, max, e.offsetY, canvas.current.height);
+    const v = toValue(e.offsetY);
     if(onChange) {
-      return onChange(nextValue);
+      return onChange(v);
     }
-  }, [onChange, min, max, canvas]);
+  }, [onChange, toValue]);
 
   // MouseUp
   const onMouseUp = useCallback((e) => {
@@ -99,30 +145,29 @@ const VSlider = ({
 
   // TouchStart
   const onTouchStart = useCallback((e) => {
-    const [touch] = e.touches;
-    const mouseEvent = new MouseEvent("mousedown", {
-      clientX: touch.clientX,
-      clientY: touch.clientY
+    e.preventDefault();
+    const [x, y] = offsetFromTouchEvent(e);
+    return onMouseDown({
+      offsetX: x,
+      offsetY: y,
     });
-    canvas.current.dispatchEvent(mouseEvent);
-  }, [canvas]);
+  }, [onMouseDown]);
 
   // TouchMove
   const onTouchMove = useCallback((e) => {
-    const [touch] = e.touches;
-    const mouseEvent = new MouseEvent("mousemove", {
+    e.preventDefault();
+    const [x, y] = offsetFromTouchEvent(e);
+    onMouseMove({
       buttons: 1,
-      clientX: touch.clientX,
-      clientY: touch.clientY
+      offsetX: x,
+      offsetY: y, 
     });
-    canvas.current.dispatchEvent(mouseEvent);
-  }, [canvas]);
+  }, [onMouseMove]);
 
   // TouchEnd
   const onTouchEnd = useCallback((e) => {
-    const mouseEvent = new MouseEvent("mouseup", {});
-    canvas.current.dispatchEvent(mouseEvent);
-  }, [canvas]);
+    onMouseUp();
+  }, [onMouseUp]);
 
   const onContextMenu = useCallback((e) => {
     e.preventDefault();
@@ -137,27 +182,19 @@ const VSlider = ({
   }, [canvas, container]);
 
   // Bind Events
+  useBindMouseDown(canvas, onMouseDown);
+  useBindMouseMove(canvas, onMouseMove);
+  useBindMouseUp(canvas, onMouseUp);
+
+  useBindTouchStart(canvas, onTouchStart);
+  useBindTouchMove(canvas, onTouchMove);
+  useBindTouchEnd(canvas, onTouchEnd);
+
+  // Prevent context menu
   useEffect(() => {
-    canvas.current.addEventListener("mousedown", onMouseDown);
-    canvas.current.addEventListener("mousemove", onMouseMove);
-    canvas.current.addEventListener("mouseup",   onMouseUp);
-
-    // Touch compatibility
-    canvas.current.addEventListener("touchmove",  onTouchMove);
-    canvas.current.addEventListener("touchstart", onTouchStart);
-    canvas.current.addEventListener("touchend",   onTouchEnd);
-
-    // Prevent context menu
     canvas.current.oncontextmenu = onContextMenu;
   }, [
-    canvas,
-    onMouseDown,
-    onMouseMove,
-    onMouseUp,
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd,
-    onContextMenu,
+    canvas, onContextMenu,
   ]);
 
   // Draw slider on canvas
@@ -165,7 +202,7 @@ const VSlider = ({
     const ctx = canvas.current.getContext("2d");
 
     // Calculate handle position
-    const handleY = valueToOffset(min, max, value, canvas.current.height);
+    const handleY = toOffset(value);
 
     ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
     drawBase(ctx, canvas.current.width / 2, 4, canvas.current.height);
@@ -184,7 +221,7 @@ const VSlider = ({
                handleY,
                canvas.current.width,
                15);
-  }, [canvas, value, min, max]);
+  }, [canvas, value, toOffset]);
 
   return (
     <div className="slider slider-v" ref={container}>
